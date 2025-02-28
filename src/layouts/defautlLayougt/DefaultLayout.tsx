@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import HeaderComponent from "../../components/layout/HeaderComponent";
-import FooterComponent from "../../components/layout/FooterComponent";
-import SidebarComponent from "../../components/layout/SidebarComponent";
+import HeaderComponent from "../../components/layout/AdminLayout/HeaderComponent";
+import FooterComponent from "../../components/layout/AdminLayout/FooterComponent";
+import SidebarComponent from "../../components/layout/AdminLayout/SidebarComponent";
 
 // import "./_variables.scss"
 // import "./_vertical-wrapper.scss"
