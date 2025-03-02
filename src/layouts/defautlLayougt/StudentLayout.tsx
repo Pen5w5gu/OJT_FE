@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
-import HeaderComponent from "../../components/layout/StudentLayout/HeaderComponent";
-import FooterComponent from "../../components/layout/StudentLayout/FooterComponent";
-import SidebarComponent from "../../components/layout/StudentLayout/SidebarComponent";
+import HeaderComponent from "../../components/layout/StudentComponets/HeaderComponent";
+import FooterComponent from "../../components/layout/StudentComponets/FooterComponent";
+import SidebarComponent from "../../components/layout/StudentComponets/SidebarComponent";
+import '../../components/styles/studentPage.css'
+
 
 // import "./_variables.scss"
 // import "./_vertical-wrapper.scss"
@@ -9,18 +11,9 @@ import SidebarComponent from "../../components/layout/StudentLayout/SidebarCompo
 
 const StudentLayout: React.FC = () => {
     return (
-        <div className="container-scroller">
+        <div className="container-scroller min-h-screen flex flex-col">
             <HeaderComponent />
-            <div className="container-fluid page-body-wrapper">
-                <SidebarComponent />
-                <div className="main-panel">
-                    <div className="content-wrapper">
-                        <Outlet />
-
-                    </div>
-                    <FooterComponent />
-                </div>
-            </div>
+            <Outlet />
         </div>
     );
 };

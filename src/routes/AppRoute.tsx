@@ -1,8 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedLayouts from "../layouts/defautlLayougt/DefaultLayout";
 import Table from "../pages/protected/tabletest/Table";
-import HomeStudent from "../pages/public/HomeStudent";
+import HomeStudent from "../pages/studentPages/public/Home";
 import StudentLayout from "../layouts/defautlLayougt/StudentLayout";
+import Companies from "../pages/studentPages/public/Companies";
+import JobOpportunities from "../pages/studentPages/protected/JobOpportunities";
+import DefaultLayout from "../layouts/defautlLayougt/DefaultLayout";
+import InternshipProposals from "../pages/studentPages/protected/InternshipProposals";
+import CvStudent from "../pages/studentPages/protected/CvStudent";
 
 const AppRoute: React.FC = () => {
   return (
@@ -17,7 +22,15 @@ const AppRoute: React.FC = () => {
       {/* Protected Routes */}
       <Route element={<StudentLayout />}>
         <Route path="/" element={<HomeStudent />} />
+        <Route path="/Companies" element={<Companies />} />
+        <Route path="/JobOpportunities" element={<JobOpportunities />} />
+        <Route path="/InternshipProposals" element={<InternshipProposals />} />
+        <Route path="/CvStudent" element={<CvStudent />} />
+        <Route path="/Profile" element={<Companies />} />
+      </Route>
 
+      <Route element={<DefaultLayout />}>
+        <Route path="/help" element={<Table />} />
       </Route>
 
     </Routes>
