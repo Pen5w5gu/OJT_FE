@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import avatar from "../../../../assets/images/faces/face28.jpg";
 
 function ProtectedNavLinkComponent() {
@@ -30,14 +30,14 @@ function ProtectedNavLinkComponent() {
                 </NavLink>
             </li>
             <li className="nav-item nav-profile dropdown d-flex align-items-center">
-                <a
+                <Link
                     className="nav-link dropdown-toggle"
-                    href="#"
+                    to="/Profile"
                     data-toggle="dropdown"
                     id="profileDropdown"
                 >
                     <img src={avatar} className="" alt="profile" width="40" height="40" />
-                </a>
+                </Link>
                 <div
                     className="dropdown-menu dropdown-menu-right navbar-dropdown"
                     aria-labelledby="profileDropdown"

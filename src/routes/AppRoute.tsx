@@ -8,6 +8,7 @@ import JobOpportunities from "../pages/studentPages/protected/JobOpportunities";
 import DefaultLayout from "../layouts/defautlLayougt/DefaultLayout";
 import InternshipProposals from "../pages/studentPages/protected/InternshipProposals";
 import CvStudent from "../pages/studentPages/protected/CvStudent";
+import Profile from "../pages/Profile";
 
 const AppRoute: React.FC = () => {
   return (
@@ -26,7 +27,7 @@ const AppRoute: React.FC = () => {
         <Route path="/JobOpportunities" element={<JobOpportunities />} />
         <Route path="/InternshipProposals" element={<InternshipProposals />} />
         <Route path="/CvStudent" element={<CvStudent />} />
-        <Route path="/Profile" element={<Companies />} />
+        <Route path="/Profile" element={<Profile />} />
       </Route>
 
       <Route element={<DefaultLayout />}>
