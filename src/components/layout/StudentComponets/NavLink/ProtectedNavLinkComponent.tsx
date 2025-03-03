@@ -3,7 +3,7 @@ import avatar from "../../../../assets/images/faces/face28.jpg";
 
 function ProtectedNavLinkComponent() {
     return (
-        <ul className="navbar-nav">
+        <ul id="studentPage" className="navbar-nav">
             <li className="nav-item d-flex align-items-center">
                 <NavLink to="/" className="nav-link">
                     Home
@@ -30,22 +30,22 @@ function ProtectedNavLinkComponent() {
                 </NavLink>
             </li>
             <li className="nav-item nav-profile dropdown d-flex align-items-center">
-                <Link
+                <a
                     className="nav-link dropdown-toggle"
-                    to="/Profile"
+                    href=""
                     data-toggle="dropdown"
                     id="profileDropdown"
                 >
                     <img src={avatar} className="" alt="profile" width="40" height="40" />
-                </Link>
+                </a>
                 <div
                     className="dropdown-menu dropdown-menu-right navbar-dropdown"
                     aria-labelledby="profileDropdown"
                 >
-                    <a className="dropdown-item">
+                    <Link className="dropdown-item" to="/Profile">
                         <i className="mr-2 ti-user text-primary"></i>
                         Profile
-                    </a>
+                    </Link>
                     <a className="dropdown-item">
                         <i className="mr-2 ti-shift-left text-primary"></i>
                         Logout

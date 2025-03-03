@@ -1,10 +1,18 @@
+#summary-bg{
+  margin-top: 25px;
+  /* background-color: rgba(66, 203, 233, 0.12); */
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 14px;
+}
 .navbar-nav#studentPage .nav-item {
-  margin-left: 3rem;
+  margin-left: 2rem;
 }
 
 .navbar-nav#studentPage .btn {
-  margin-left: 3rem;
+  margin-left: 2rem;
 }
+
 
 .navbar-nav#studentPage .nav-link.active {
   font-weight: bold;

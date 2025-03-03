@@ -1,6 +1,6 @@
 import './App.css'
 import AppRoute from './routes/AppRoute'
-import './components/styles/global.css'
+import './assets/css/global.css'
 
 function App() {
   return (

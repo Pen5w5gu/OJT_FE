@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "../../components/layout/StudentComponets/HeaderComponent";
-import FooterComponent from "../../components/layout/StudentComponets/FooterComponent";
-import SidebarComponent from "../../components/layout/StudentComponets/SidebarComponent";
-import '../../components/styles/studentPage.css'
+import "../../assets/css/studentPage.css"
 
 
 // import "./_variables.scss"
