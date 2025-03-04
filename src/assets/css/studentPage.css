@@ -20,3 +20,10 @@
   text-underline-offset: 15px;
   text-decoration-thickness: 2px;
 }
+
+.dropdown-menu#filerDropdown {
+  margin-top: 5px;
+  width: 300px !important; /* Đảm bảo độ rộng phù hợp */
+  max-height: 200px; /* Giới hạn chiều cao tối đa */
+  overflow-y: auto; /* Hiển thị thanh cuộn khi nội dung vượt quá */
+}

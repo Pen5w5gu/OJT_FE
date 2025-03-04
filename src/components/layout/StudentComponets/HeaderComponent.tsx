@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import ProtectedNavLinkComponent from "./NavLink/ProtectedNavLinkComponent";
 import PublicNavLinkComponent from "./NavLink/PublicNavLinkComponent";
-import logo from "../../../../public/FPT_University_logo.webp";
+import logo from "/FPT_University_logo.webp";
 
 function Header() {
   return (
