@@ -10,17 +10,17 @@ function ProtectedNavLinkComponent() {
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/JobOpportunities" className="nav-link">
+                <NavLink to="/internship/list" className="nav-link">
                     Job Opportunities
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/Companies" className="nav-link">
+                <NavLink to="/company/list" className="nav-link">
                     Companies & Institutions
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/InternshipProposals" className="nav-link">
+                <NavLink to="/internship/detail" className="nav-link">
                     My OJT Proposals
                 </NavLink>
             </li>

@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedLayouts from "../layouts/defautlLayout/DefaultLayout";
 import Table from "../pages/protected/tabletest/Table";
-import HomeStudent from "../pages/studentPages/public/Home";
+import HomeStudent from "../pages/public/Home";
 import StudentLayout from "../layouts/defautlLayout/StudentLayout";
-import Companies from "../pages/studentPages/public/Companies";
-import JobOpportunities from "../pages/studentPages/protected/JobOpportunities";
+import Companies from "../pages/public/Companies";
+import JobOpportunities from "../pages/protected/student/JobOpportunities";
 import DefaultLayout from "../layouts/defautlLayout/DefaultLayout";
-import InternshipProposals from "../pages/studentPages/protected/InternshipProposals";
-import CvStudent from "../pages/studentPages/protected/CvStudent";
-import Profile from "../pages/Profile";
-import CompanyDetails from "../pages/studentPages/protected/CompanyDetails";
+import InternshipProposals from "../pages/protected/student/InternshipProposals";
+import CvStudent from "../pages/protected/student/CvStudent";
+import Profile from "../pages/protected/student/Profile";
+import CompanyDetails from "../pages/protected/student/CompanyDetails";
 import InternshipList from "../pages/protected/internship/InternshipList";
 import AuthLayouts from "../layouts/authLayout/AuthLayouts";
 import LoginPage from "../pages/auth/login/LoginPage";
@@ -32,12 +32,12 @@ const AppRoute: React.FC = () => {
       {/* Protected Routes */}
       <Route element={<StudentLayout />}>
         <Route path="/" element={<HomeStudent />} />
-        <Route path="/Companies" element={<Companies />} />
-        <Route path="/CompanyDetails" element={<CompanyDetails />} />
-        <Route path="/JobOpportunities" element={<JobOpportunities />} />
-        <Route path="/InternshipProposals" element={<InternshipProposals />} />
-        <Route path="/CvStudent" element={<CvStudent />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/company/list" element={<Companies />} />
+        <Route path="/company/details" element={<CompanyDetails />} />
+        <Route path="/internship/list" element={<JobOpportunities />} />
+        <Route path="/internship/detail" element={<InternshipProposals />} />
+        <Route path="/cvStudent" element={<CvStudent />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
 
       <Route element={<DefaultLayout />}>
@@ -52,7 +52,7 @@ const AppRoute: React.FC = () => {
       <Route element={<ProtectedLayouts />}>
         <Route path="/" element={<Table />} />
         <Route
-          path="/internship/list"
+          path="/manager/internship/list"
           element={
             <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
               <InternshipList />
@@ -60,7 +60,7 @@ const AppRoute: React.FC = () => {
           }
         />
         <Route
-          path="/company/list"
+          path="/manager/company/list"
           element={
             <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
               <CompanyList />

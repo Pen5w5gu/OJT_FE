@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  
+
   // Kiểm tra nếu dữ liệu là FormData thì đặt lại Content-Type
   if (config.data instanceof FormData) {
     config.headers["Content-Type"] = "multipart/form-data";
@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
       }
 
       AuthService.removeToken();
-      window.location.href = "/login"; 
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
