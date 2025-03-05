@@ -3,7 +3,7 @@ import axiosInstance from "./Axios";
 import axios from "axios";
 
 // URL của API backend
-const API_URL = "http://localhost:5128/api/Major";
+const API_URL = "http://localhost:5028/api/Major";
 
 // Hàm lấy tất cả ngành học
 export const fetchMajors = async (): Promise<Major[]> => {

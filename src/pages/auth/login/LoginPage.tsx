@@ -12,8 +12,8 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       const response = await AuthService.login(email, password);
-      if (response.data.accessToken) {
-        AuthService.setToken(response.data.accessToken);
+      if (response.data) {
+        AuthService.setToken(response.data);
         Swal.fire({ icon: "success", title: "Success", text: "Login successful" });
         navigate("/");
       } else {

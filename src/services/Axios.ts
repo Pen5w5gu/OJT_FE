@@ -3,7 +3,7 @@ import axios from "axios";
 import AuthService from "./AuthService";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5128",
+  baseURL: "http://localhost:5028",
   headers: { "Content-Type": "application/json" },
   timeout: 20000,
 });
@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
         try {
-          const res = await axios.post("http://localhost:5128/api/Auth/refresh", { refreshToken });
+          const res = await axios.post("http://localhost:5028/api/Auth/refresh", { refreshToken });
           const newToken = res.data.accessToken;
           const newRefreshToken = res.data.refreshToken;
 

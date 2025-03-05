@@ -17,7 +17,12 @@ const CompanyList: React.FC = () => {
   const fetchAllData = async () => {
     try {
       setLoading(true);
-      const data = await fetchCompanies(pageNumber, pageSize, searchKeyword, location);
+      const data = await fetchCompanies(
+        pageNumber,
+        pageSize,
+        searchKeyword,
+        location
+      );
       console.log("Fetched companies:", data);
       if (data && data.items) {
         setCompanyData(data.items);
@@ -42,22 +47,28 @@ const CompanyList: React.FC = () => {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">Company List</h4>
-            <div className="d-flex gap-2 mb-3">
-              <input
-                type="text"
-                placeholder="Search by company name..."
-                className="form-control"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Filter by location..."
-                className="form-control"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-              <Button className="btn btn-primary" onClick={fetchAllData}>Search</Button>
+            <div className="d-flex mb-3">
+              <div style={{marginRight: '0.5rem'}}>
+                <input
+                  type="text"
+                  placeholder="Search by company name..."
+                  className="form-control"
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                />
+              </div>
+              <div style={{marginRight: '0.5rem'}}>
+                <input
+                  type="text"
+                  placeholder="Filter by location..."
+                  className="form-control"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </div>
+              <Button className="btn btn-primary" onClick={fetchAllData}>
+                Search
+              </Button>
             </div>
             {loading ? (
               <p>Loading companies...</p>
@@ -86,7 +97,11 @@ const CompanyList: React.FC = () => {
                             <td>{company.companyName}</td>
                             <td>{company.phoneNumber}</td>
                             <td>
-                              <a href={company.websiteUrl} target="_blank" rel="noopener noreferrer">
+                              <a
+                                href={company.websiteUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
                                 {company.websiteUrl}
                               </a>
                             </td>
@@ -118,13 +133,13 @@ const CompanyList: React.FC = () => {
               </>
             )}
 
-           <div className="d-flex justify-content-end mt-4">
-           <Pagination
-              pageCurrent={pageNumber}
-              totalPage={totalPages}
-              paginate={setPageNumber}
-            />
-           </div>
+            <div className="d-flex justify-content-end mt-4">
+              <Pagination
+                pageCurrent={pageNumber}
+                totalPage={totalPages}
+                paginate={setPageNumber}
+              />
+            </div>
           </div>
         </div>
       </div>

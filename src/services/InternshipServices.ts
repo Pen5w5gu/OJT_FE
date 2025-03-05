@@ -3,7 +3,7 @@ import axiosInstance from "./Axios";
 import axios from "axios";
 
 
-const API_URL = "http://localhost:5128/api/Internship";
+const API_URL = "http://localhost:5028/api/Internship";
 
 export const fetchInternships = async (): Promise<Internship[]> => {
   try {

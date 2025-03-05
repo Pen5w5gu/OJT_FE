@@ -1,7 +1,7 @@
 import { Company } from "../types/DataTypes";
 import axiosInstance from "./Axios";
 
-const API_URL = "http://localhost:5128/api/Company";
+const API_URL = "http://localhost:5028/api/Company";
 
 // Hàm lấy danh sách công ty với tìm kiếm, phân trang và lọc
 export const fetchCompanies = async (
