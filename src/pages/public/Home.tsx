@@ -1,7 +1,7 @@
-import HeaderImg from '../../../assets/images/studentPage/Header01.png';
-import InfoImg from '../../../assets/images/studentPage/Info.png';
+import HeaderImg from '../../assets/images/studentPage/Header01.png';
+import InfoImg from '../../assets/images/studentPage/Info.png';
 import FooterImg from '../../../assets/images/studentPage/Footer01.png';
-import Footer from '../../../components/layout/StudentComponets/FooterComponent';
+import Footer from '../../components/layout/StudentComponets/FooterComponent';
 
 const Home: React.FC = () => {
   return (

@@ -1,6 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedLayouts from "../layouts/defautlLayout/DefaultLayout";
 import Table from "../pages/protected/tabletest/Table";
+import HomeStudent from "../pages/public/Home";
+import StudentLayout from "../layouts/defautlLayout/StudentLayout";
+import Companies from "../pages/public/Companies";
+import JobOpportunities from "../pages/protected/student/JobOpportunities";
+import DefaultLayout from "../layouts/defautlLayout/DefaultLayout";
+import InternshipProposals from "../pages/protected/student/InternshipProposals";
+import CvStudent from "../pages/protected/student/CvStudent";
+import Profile from "../pages/protected/student/Profile";
+import CompanyDetails from "../pages/protected/student/CompanyDetails";
 import InternshipList from "../pages/protected/internship/InternshipList";
 import AuthLayouts from "../layouts/authLayout/AuthLayouts";
 import LoginPage from "../pages/auth/login/LoginPage";
@@ -9,48 +18,11 @@ import { Role } from "../types/DataTypes";
 import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
-import HomeStudent from "../pages/studentPages/public/Home";
-import StudentLayout from "../layouts/defautlLayougt/StudentLayout";
-import Companies from "../pages/studentPages/public/Companies";
-import JobOpportunities from "../pages/studentPages/protected/JobOpportunities";
-import DefaultLayout from "../layouts/defautlLayougt/DefaultLayout";
-import InternshipProposals from "../pages/studentPages/protected/InternshipProposals";
-import CvStudent from "../pages/studentPages/protected/CvStudent";
-import Profile from "../pages/Profile";
-import CompanyDetails from "../pages/studentPages/protected/CompanyDetails";
 
 const AppRoute: React.FC = () => {
   return (
     <Routes>
       {/* Auth Routes */}
-      <Route element={<AuthLayouts />}>
-        <Route path="/login" element={<LoginPage />} />
-      </Route>
-
-      {/* Protected Routes */}
-      <Route element={<ProtectedLayouts />}>
-        <Route path="/" element={<Table />} />
-        <Route
-          path="/internship/list"
-          element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
-              <InternshipList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/company/list"
-          element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
-              <CompanyList/>
-            </ProtectedRoute>
-          }
-        />
-      </Route>
-
-      <Route element={<ErrorLayout />}>
-        <Route path="/403-forbidden" element={<ForbiddenError />} />
-      </Route>
       {/* <Route element={<AuthLayouts />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -60,18 +32,46 @@ const AppRoute: React.FC = () => {
       {/* Protected Routes */}
       <Route element={<StudentLayout />}>
         <Route path="/" element={<HomeStudent />} />
-        <Route path="/Companies" element={<Companies />} />
-        <Route path="/CompanyDetails" element={<CompanyDetails />} />
-        <Route path="/JobOpportunities" element={<JobOpportunities />} />
-        <Route path="/InternshipProposals" element={<InternshipProposals />} />
-        <Route path="/CvStudent" element={<CvStudent />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/company/list" element={<Companies />} />
+        <Route path="/company/details" element={<CompanyDetails />} />
+        <Route path="/internship/list" element={<JobOpportunities />} />
+        <Route path="/internship/detail" element={<InternshipProposals />} />
+        <Route path="/cvStudent" element={<CvStudent />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
 
       <Route element={<DefaultLayout />}>
         <Route path="/help" element={<Table />} />
       </Route>
 
+      <Route element={<AuthLayouts />}>
+        <Route path="/login" element={<LoginPage />} />
+      </Route>
+
+      {/* Protected Routes */}
+      <Route element={<ProtectedLayouts />}>
+        <Route path="/" element={<Table />} />
+        <Route
+          path="/manager/internship/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+              <InternshipList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manager/company/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+              <CompanyList />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+
+      <Route element={<ErrorLayout />}>
+        <Route path="/403-forbidden" element={<ForbiddenError />} />
+      </Route>
     </Routes>
   );
 };

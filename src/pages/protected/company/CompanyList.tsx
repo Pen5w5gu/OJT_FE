@@ -48,7 +48,7 @@ const CompanyList: React.FC = () => {
           <div className="card-body">
             <h4 className="card-title">Company List</h4>
             <div className="d-flex mb-3">
-              <div style={{marginRight: '0.5rem'}}>
+              <div style={{ marginRight: '0.5rem' }}>
                 <input
                   type="text"
                   placeholder="Search by company name..."
@@ -57,7 +57,7 @@ const CompanyList: React.FC = () => {
                   onChange={(e) => setSearchKeyword(e.target.value)}
                 />
               </div>
-              <div style={{marginRight: '0.5rem'}}>
+              <div style={{ marginRight: '0.5rem' }}>
                 <input
                   type="text"
                   placeholder="Filter by location..."

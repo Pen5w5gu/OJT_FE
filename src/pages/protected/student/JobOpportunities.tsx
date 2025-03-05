@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../../../components/layout/StudentComponets/FooterComponent';
 
 
 const JobOpportunities: React.FC = () => {
