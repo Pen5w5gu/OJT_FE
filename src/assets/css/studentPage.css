@@ -1,0 +1,57 @@
+#summary-bg{
+  margin-top: 25px;
+  /* background-color: rgba(66, 203, 233, 0.12); */
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 14px;
+}
+.navbar-nav#studentPage .nav-item {
+  margin-left: 2rem;
+}
+
+.navbar-nav#studentPage .btn {
+  margin-left: 2rem;
+}
+
+
+.navbar-nav#studentPage .nav-link.active {
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 15px;
+  text-decoration-thickness: 2px;
+}
+
+.dropdown-menu#filerDropdown {
+  margin-top: 10px;
+  border-radius: 14px;
+  width: 300px !important; /* Đảm bảo độ rộng phù hợp */
+  height: 300px !important; /* Giới hạn chiều cao tối đa */
+  overflow-y: auto; /* Hiển thị thanh cuộn khi nội dung vượt quá */
+}
+
+.dropdown-menu#filerDropdown::-webkit-scrollbar {
+  width: 5px; /* Độ rộng thanh cuộn */
+  background-color: #f1f1f1; /* Mau nhung thanh cuộn */
+  
+}
+
+.dropdown-menu#filerDropdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+.dropdown-menu#filerDropdown::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dropdown-menu#filerDropdown #searchDropdown {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 5px;
+  border: 1px solid #ccccccce;
+  border-radius: 24px;
+} 
+
+.dropdown-menu#filerDropdown #searchDropdown::placeholder {
+  font-size: 15px;
+  padding: 20px 15px;
+}
