@@ -5,7 +5,7 @@ import Footer from '../../../components/layout/StudentComponets/FooterComponent'
 const JobOpportunities: React.FC = () => {
     return (
         <>
-            <div className="container p-5 mt-3">
+            <div className="container vh-100 p-5 mt-3">
                 <div className="row">
                     {/* Filter Section */}
                     <div className="col-md-8">
@@ -16,7 +16,7 @@ const JobOpportunities: React.FC = () => {
                                     Major
                                 </button>
                                 <div id="filerDropdown" className="dropdown-menu p-3" style={{ width: '250px' }}>
-                                    <input placeholder="Search" className="mb-2" />
+                                    <input id="searchDropdown" placeholder="Search" className="mb-2" />
                                     <div>
                                         <label className="d-block"><input type="checkbox" checked /> <strong>Select all</strong></label>
                                         <label className="d-block"><input type="checkbox" checked /> Korean Language</label>
@@ -32,9 +32,14 @@ const JobOpportunities: React.FC = () => {
                                     Company
                                 </button>
                                 <div id="filerDropdown" className="dropdown-menu p-3" style={{ width: '250px' }}>
-                                    <input placeholder="Search" className="mb-2" />
+                                    <input id="searchDropdown" placeholder="Search" className="mb-2" />
                                     <div>
                                         <label className="d-block"><input type="checkbox" checked /> <strong>Select all</strong></label>
+                                        <label className="d-block"><input type="checkbox" checked /> CÔNG TY TNHH LÊ VÀ ANH EM</label>
+                                        <label className="d-block"><input type="checkbox" checked /> Công ty TNHH Công Nghệ SmartNetadadad</label>
+                                        <label className="d-block"><input type="checkbox" checked /> Công ty CPPT Việt Cafe</label>
+                                        <label className="d-block"><input type="checkbox" checked /> CÔNG TY TNHH TOKENIZE VIETNAM</label>
+                                        <label className="d-block"><input type="checkbox" checked /> Digital Art & Design</label>
                                         <label className="d-block"><input type="checkbox" checked /> CÔNG TY TNHH LÊ VÀ ANH EM</label>
                                         <label className="d-block"><input type="checkbox" checked /> Công ty TNHH Công Nghệ SmartNetadadad</label>
                                         <label className="d-block"><input type="checkbox" checked /> Công ty CPPT Việt Cafe</label>
@@ -43,22 +48,7 @@ const JobOpportunities: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="btn-group mr2  ml-5">
-                                <button type="button" className="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                                    Location
-                                </button>
-                                <div id="filerDropdown" className="dropdown-menu p-3" style={{ width: '250px' }}>
-                                    <input placeholder="Search" className="mb-2" />
-                                    <div>
-                                        <label className="d-block"><input type="checkbox" checked /> <strong>Select all</strong></label>
-                                        <label className="d-block"><input type="checkbox" checked /> Korean Language</label>
-                                        <label className="d-block"><input type="checkbox" checked /> Japanese Language</label>
-                                        <label className="d-block"><input type="checkbox" checked /> English Language</label>
-                                        <label className="d-block"><input type="checkbox" checked /> Business Administration</label>
-                                        <label className="d-block"><input type="checkbox" checked /> Digital Art & Design</label>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <p>Results: 0</p>
                         <p>Page 1 of 0</p>
