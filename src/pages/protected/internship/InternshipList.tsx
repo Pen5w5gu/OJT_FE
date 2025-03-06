@@ -62,8 +62,8 @@ const InternshipList: React.FC = () => {
                           <tr key={internship.internshipId}>
                             <td>{index + 1}</td>
                             <td>{internship.position}</td>
-                            <td>{internship.companyId}</td>
-                            <td>{internship.majorId}</td>
+                            <td>{internship.companyName}</td>
+                            <td>{internship.majorName}</td>
                             <td>{internship.requirment}</td>
                             <td>{internship.salary}</td>
                             <td>{internship.benefits}</td>

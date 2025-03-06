@@ -14,3 +14,32 @@ export const fetchInternships = async (): Promise<Internship[]> => {
     return [];
   }
 };
+
+export const fetchAllInternships = async (
+  pageNumber: number = 1,
+  pageSize: number | null = null,
+  searchTerm: string = "",
+  MajorId: number | null = null,
+  CompanyId: number | null = null,
+
+
+): Promise<Internship[]> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/Internship-page-by-company`, {
+      params: {
+        SearchTerm: searchTerm,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+        MajorId: MajorId,
+        CompanyId: CompanyId
+      }
+    });
+    if (response.data && response.data.data) {
+      return response.data.data.items
+    }
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching internship:", error);
+    return []
+  }
+}

@@ -9,7 +9,7 @@ const API_URL = "http://localhost:5028/api/Major";
 export const fetchMajors = async (): Promise<Major[]> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/GetAllMajor`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching majors:", error);
     return [];

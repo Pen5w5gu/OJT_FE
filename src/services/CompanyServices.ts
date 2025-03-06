@@ -33,3 +33,30 @@ export const fetchCompanies = async (
     return { items: [], totalPages: 1 };
   }
 };
+
+export const fetchAllCompanies = async (
+  pageNumber: number = 1,
+  pageSize: number = 10,
+  searchTerm: string = "",
+  location: string = ""
+): Promise<Company[]> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies`, {
+      params: {
+        SearchTerm: searchTerm,
+        Location: location,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+      },
+    });
+
+    if (response.data && response.data.data) {
+      return response.data.data.items
+    }
+
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return []
+  }
+};
