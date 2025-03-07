@@ -18,6 +18,7 @@ import { Role } from "../types/DataTypes";
 import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
+import WelcomeManager from "../pages/protected/WelcomeManager";
 
 const AppRoute: React.FC = () => {
   return (
@@ -50,7 +51,15 @@ const AppRoute: React.FC = () => {
 
       {/* Protected Routes */}
       <Route element={<ProtectedLayouts />}>
-        <Route path="/" element={<Table />} />
+      <Route
+          path="/manager/welcome"
+          element={
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+              <WelcomeManager/>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/manager/internship/list"
           element={

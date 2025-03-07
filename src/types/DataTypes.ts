@@ -5,8 +5,8 @@ export interface Internship {
   requirment: string;
   benefits: string;
   salary: number;
-  companyId: number;
-  majorId: number;
+  companyName: string;
+  majorName: string;
 }
 
 export interface Company {

@@ -1,12 +1,16 @@
-function Header() {
+import React from "react";
+import logo from "/FPT_University_logo.webp";
+
+const Header: React.FC = () => {
+  
   return (
     <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a className="navbar-brand brand-logo mr-5" href="../../index.html">
-          <img src="../../images/logo.svg" className="mr-2" alt="logo" />
+          <img src={logo} className="mr-2" alt="logo" />
         </a>
         <a className="navbar-brand brand-logo-mini" href="../../index.html">
-          <img src="../../images/logo-mini.svg" alt="logo" />
+          <img src={logo} alt="logo" />
         </a>
       </div>
       <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -17,7 +21,7 @@ function Header() {
         >
           <span className="icon-menu"></span>
         </button>
-        <ul className="navbar-nav mr-lg-2">
+        {/* <ul className="navbar-nav mr-lg-2">
           <li className="nav-item nav-search d-none d-lg-block">
             <div className="input-group">
               <div
@@ -38,9 +42,9 @@ function Header() {
               />
             </div>
           </li>
-        </ul>
+        </ul> */}
         <ul className="navbar-nav navbar-nav-right">
-          <li className="nav-item dropdown">
+          {/* <li className="nav-item dropdown">
             <a
               className="nav-link count-indicator dropdown-toggle"
               id="notificationDropdown"
@@ -103,7 +107,7 @@ function Header() {
                 </div>
               </a>
             </div>
-          </li>
+          </li> */}
           <li className="nav-item nav-profile dropdown">
             <a
               className="nav-link dropdown-toggle"
@@ -111,7 +115,7 @@ function Header() {
               data-toggle="dropdown"
               id="profileDropdown"
             >
-              <img src="../../images/faces/face28.jpg" alt="profile" />
+              <img src="https://res.cloudinary.com/dt9hjydap/image/upload/v1731182417/hrrx6nnwuvrxbaqlacne.jpg" alt="profile" />
             </a>
             <div
               className="dropdown-menu dropdown-menu-right navbar-dropdown"
@@ -127,19 +131,19 @@ function Header() {
               </a>
             </div>
           </li>
-          <li className="nav-item nav-settings d-none d-lg-flex">
+          {/* <li className="nav-item nav-settings d-none d-lg-flex">
             <a className="nav-link" href="#">
               <i className="icon-ellipsis"></i>
             </a>
-          </li>
+          </li> */}
         </ul>
-        <button
+        {/* <button
           className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
           type="button"
           data-toggle="offcanvas"
         >
           <span className="icon-menu"></span>
-        </button>
+        </button> */}
       </div>
     </nav>
 

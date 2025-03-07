@@ -1,4 +1,5 @@
 import { Company } from "../types/DataTypes";
+import { CompanyFilter } from "../types/FilterTypes";
 import axiosInstance from "./Axios";
 
 const API_URL = "http://localhost:5028/api/Company";
@@ -31,5 +32,26 @@ export const fetchCompanies = async (
   } catch (error) {
     console.error("Error fetching companies:", error);
     return { items: [], totalPages: 1 };
+  }
+};
+
+
+export const fetchCompanyFilter = async (
+): Promise<{ items: CompanyFilter[]}> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies`, {
+      
+    });
+
+    if (response.data && response.data.data) {
+      return {
+        items: response.data.data.items || [],
+      };
+    }
+
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching Filters companies:", error);
+    return { items: []};
   }
 };
