@@ -9,7 +9,7 @@ import DefaultLayout from "../layouts/defautlLayout/DefaultLayout";
 import InternshipProposals from "../pages/protected/student/InternshipProposals";
 import CvStudent from "../pages/protected/student/CvStudent";
 import Profile from "../pages/protected/student/Profile";
-import CompanyDetails from "../pages/protected/student/CompanyDetails";
+import CompanyDetail from "../pages/protected/student/CompanyDetail";
 import InternshipList from "../pages/protected/internship/InternshipList";
 import AuthLayouts from "../layouts/authLayout/AuthLayouts";
 import LoginPage from "../pages/auth/login/LoginPage";
@@ -18,6 +18,7 @@ import { Role } from "../types/DataTypes";
 import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
+import InternshipDetail from "../pages/protected/student/InternshipDetail";
 
 const AppRoute: React.FC = () => {
   return (
@@ -33,9 +34,9 @@ const AppRoute: React.FC = () => {
       <Route element={<StudentLayout />}>
         <Route path="/" element={<HomeStudent />} />
         <Route path="/company/list" element={<Companies />} />
-        <Route path="/company/details" element={<CompanyDetails />} />
+        <Route path="/company/detail/:id" element={<CompanyDetail />} />
         <Route path="/internship/list" element={<JobOpportunities />} />
-        <Route path="/internship/detail" element={<InternshipProposals />} />
+        <Route path="/internship/detail/:id" element={<InternshipDetail />} />
         <Route path="/cvStudent" element={<CvStudent />} />
         <Route path="/profile" element={<Profile />} />
       </Route>

@@ -4,6 +4,7 @@ import { fetchMajors } from '../../../services/MajorServices';
 import { fetchAllCompanies } from '../../../services/CompanyServices';
 import { fetchAllInternships } from '../../../services/InternshipServices';
 import avatarCompany from "../../../assets/images/avatarCompany/67c66a67e42a81741056615.webp"
+import { Link } from 'react-router-dom';
 
 const JobOpportunities: React.FC = () => {
     const [majorData, setMajorData] = useState<Major[]>([]);
@@ -15,6 +16,7 @@ const JobOpportunities: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [MajorId, setMajorId] = useState<number | null>(null);
     const [CompanyId, setCompanyId] = useState<number | null>(null);
@@ -61,8 +63,10 @@ const JobOpportunities: React.FC = () => {
                 MajorId,
                 CompanyId
             );
-            if (Array.isArray(internshipList)) {
-                setInternshipData(internshipList)
+            console.log(internshipList.items);
+            if (internshipList && internshipList.items) {
+                setInternshipData(internshipList.items);
+                setTotalPages(internshipList.totalPages);
             } else {
                 throw new Error("Invalid data format: expected an array.");
             }
@@ -78,6 +82,20 @@ const JobOpportunities: React.FC = () => {
         fetchCompanyList();
         fetchAllInternshipList();
     }, []);
+
+    const prevPage = async () => {
+        if (page > 1) {
+            await setPage(page - 1)
+        }
+    }
+    const nextPage = async () => {
+        if (page < totalPages) {
+            await setPage(page + 1)
+        }
+    }
+    useEffect(() => {
+        fetchAllInternshipList();
+    }, [page, searchTerm]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'major' | 'company') => {
         const { value, checked } = event.target;
@@ -186,11 +204,11 @@ const JobOpportunities: React.FC = () => {
                                         </a>
                                         <div className="col-title cvo-flex-grow">
                                             <h3>
-                                                <a className="title">
+                                                <Link className="title" to={`/internship/detail/${internship.internshipId}`}>
                                                     <strong className="job_title">
                                                         {internship.position}
                                                     </strong>
-                                                </a>
+                                                </Link>
                                             </h3>
                                             <a className="text-silver company text_ellipsis company_name">
                                                 <span>{internship.companyName} </span>
@@ -202,7 +220,7 @@ const JobOpportunities: React.FC = () => {
                                         <div className="d-flex">
                                             <div className="col-job-info salary">
                                                 <span className="text_ellipsis">
-                                                    {internship.salary} triệu
+                                                    {internship.salary / 2} - {internship.salary} triệu
                                                 </span>
                                             </div>
                                             <div className="col-job-info location">
@@ -218,17 +236,21 @@ const JobOpportunities: React.FC = () => {
                     </div>
                     <div className='feature-job-page'>
                         <div className='content'>
-                            <span className='btn-feature-jobs-pre btn-slick-arrow'>
-                                <i className='ti-angle-left'></i>
-                            </span>
+                            <a onClick={() => prevPage()}>
+                                <span className='btn-feature-jobs-pre btn-slick-arrow'>
+                                    <i className='ti-angle-left'></i>
+                                </span>
+                            </a>
                             <div className='feature-job-page_text'>
                                 <p className='slick-pagination'>
-                                    <span className='hight-light'>5</span> / 101 trang
+                                    <span className='hight-light'>{page}</span> / {totalPages} trang
                                 </p>
                             </div>
-                            <span className="btn-feature-jobs-next btn-slick-arrow">
-                                <i className="ti-angle-right"></i>
-                            </span>
+                            <a onClick={() => nextPage()}>
+                                <span className="btn-feature-jobs-next btn-slick-arrow">
+                                    <i className="ti-angle-right"></i>
+                                </span>
+                            </a>
                         </div>
 
                     </div>

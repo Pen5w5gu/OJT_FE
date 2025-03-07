@@ -1,11 +1,11 @@
-import { Internship } from "../types/DataTypes";
+import { Company, Internship } from "../types/DataTypes";
 import axiosInstance from "./Axios";
 import axios from "axios";
 
 
 const API_URL = "http://localhost:5028/api/Internship";
 
-export const fetchInternships = async (): Promise<Internship[]> => {
+const fetchInternships = async (): Promise<Internship[]> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/GetAllInternship`);
     return response.data.data;
@@ -15,7 +15,7 @@ export const fetchInternships = async (): Promise<Internship[]> => {
   }
 };
 
-export const fetchAllInternships = async (
+const fetchAllInternships = async (
   pageNumber: number = 1,
   pageSize: number | null = null,
   searchTerm: string = "",
@@ -23,7 +23,7 @@ export const fetchAllInternships = async (
   CompanyId: number | null = null,
 
 
-): Promise<Internship[]> => {
+): Promise<{ items: Internship[]; totalPages: number }> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/Internship-page-by-company`, {
       params: {
@@ -34,12 +34,29 @@ export const fetchAllInternships = async (
         CompanyId: CompanyId
       }
     });
-    if (response.data && response.data.data) {
-      return response.data.data.items
+    if (response.data && response.data) {
+      return {
+        items: response?.data?.data.items || [],
+        totalPages: response?.data?.data.totalPages || 0
+      }
     }
     throw new Error("Invalid response format");
   } catch (error) {
     console.error("Error fetching internship:", error);
-    return []
+    return { items: [], totalPages: 0 };
   }
 }
+const fetchInternshipById = async (id: string): Promise<Internship | null> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/GetInternship/${id}`);
+    if (response.data) {
+      return response.data.data
+    }
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return null;
+  }
+}
+
+export { fetchInternships, fetchInternshipById, fetchAllInternships };

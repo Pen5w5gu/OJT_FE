@@ -4,7 +4,7 @@ import axiosInstance from "./Axios";
 const API_URL = "http://localhost:5028/api/Company";
 
 // Hàm lấy danh sách công ty với tìm kiếm, phân trang và lọc
-export const fetchCompanies = async (
+const fetchCompanies = async (
   pageNumber: number = 1,
   pageSize: number = 10,
   searchTerm: string = "",
@@ -23,18 +23,18 @@ export const fetchCompanies = async (
     if (response.data && response.data.data) {
       return {
         items: response.data.data.items || [],
-        totalPages: response.data.data.totalPages || 1,
+        totalPages: response.data.data.totalPages || 0,
       };
     }
 
     throw new Error("Invalid response format");
   } catch (error) {
     console.error("Error fetching companies:", error);
-    return { items: [], totalPages: 1 };
+    return { items: [], totalPages: 0 };
   }
 };
 
-export const fetchAllCompanies = async (
+const fetchAllCompanies = async (
   pageNumber: number = 1,
   pageSize: number = 10,
   searchTerm: string = "",
@@ -60,3 +60,18 @@ export const fetchAllCompanies = async (
     return []
   }
 };
+
+const fetchCompanyById = async (id: string): Promise<Company | null> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies/${id}`);
+    if (response.data && response.data.data) {
+      return response.data.data
+    }
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return null;
+  }
+}
+
+export { fetchCompanies, fetchAllCompanies, fetchCompanyById };

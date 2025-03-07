@@ -6,7 +6,10 @@ export interface Internship {
   benefits: string;
   salary: number;
   companyName: string;
+  companyLocation: string;
+  companyAddress: string;
   majorName: string;
+  companyID: number;
 }
 
 export interface Company {
