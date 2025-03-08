@@ -14,3 +14,10 @@ body {
 .h-46px .css-13cymwt-control{
     height: 46px !important;
 }
+a{
+    text-decoration: none !important ;
+}
+
+h2{
+    font-size: 30px !important;
+  }

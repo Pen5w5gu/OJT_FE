@@ -1,4 +1,4 @@
-import { Internship } from "../types/DataTypes";
+import { Company, Internship } from "../types/DataTypes";
 import axiosInstance from "./Axios";
 import axios from "axios";
 
