@@ -19,7 +19,7 @@ const WelcomeManager: React.FC = () => {
   return (
     <div className="row">
       <div>
-        <h2>Wellcome </h2>
+        <h2>Wel come </h2>
         {user ? (
           <p>
             Logged in as: {user.accountName} ({user.accountRole})

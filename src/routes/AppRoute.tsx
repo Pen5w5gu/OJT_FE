@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedLayouts from "../layouts/defautlLayout/DefaultLayout";
-import Table from "../pages/protected/tabletest/Table";
 import HomeStudent from "../pages/public/Home";
 import StudentLayout from "../layouts/defautlLayout/StudentLayout";
 import Companies from "../pages/public/Companies";
@@ -40,11 +39,7 @@ const AppRoute: React.FC = () => {
         <Route path="/cvStudent" element={<CvStudent />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
-
-      <Route element={<DefaultLayout />}>
-        <Route path="/help" element={<Table />} />
-      </Route>
-
+      
       <Route element={<AuthLayouts />}>
         <Route path="/login" element={<LoginPage />} />
       </Route>

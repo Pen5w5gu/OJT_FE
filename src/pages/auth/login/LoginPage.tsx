@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/AuthService";
 import Swal from "sweetalert2";
+import { Account, Role } from "../../../types/DataTypes";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +15,14 @@ const LoginPage = () => {
       const response = await AuthService.login(email, password);
       if (response.data) {
         AuthService.setToken(response.data);
+        const user: Account | null = AuthService.getUserInfo();
         Swal.fire({ icon: "success", title: "Success", text: "Login successful" });
-        navigate("/");
+        if(user && user.accountRole === Role.STUDENT) {
+          navigate("/");
+        } else {
+          navigate("/manager/welcome");
+        }
+        
       } else {
         Swal.fire({ icon: "error", title: "Error", text: "Invalid credentials" });
       }
