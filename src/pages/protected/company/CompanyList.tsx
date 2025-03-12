@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
 import { Company } from "../../../types/DataTypes";
 import { Button } from "react-bootstrap";
 import { fetchCompanies } from "../../../services/CompanyServices";
@@ -13,6 +14,25 @@ const CompanyList: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [provinces, setProvinces] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  const fetchProvinces = async () => {
+    try {
+      const response = await fetch("https://esgoo.net/api-tinhthanh/1/0.htm");
+      const data = await response.json();
+      if (data.error === 0 && Array.isArray(data.data)) {
+        const provinceOptions = data.data.map((province: any) => ({
+          value: province.name,
+          label: province.name,
+        }));
+        setProvinces(provinceOptions);
+      }
+    } catch (err) {
+      console.error("Failed to fetch provinces", err);
+    }
+  };
 
   const fetchAllData = async () => {
     try {
@@ -38,6 +58,10 @@ const CompanyList: React.FC = () => {
   };
 
   useEffect(() => {
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
     fetchAllData();
   }, [pageNumber, pageSize]);
 
@@ -48,22 +72,24 @@ const CompanyList: React.FC = () => {
           <div className="card-body">
             <h4 className="card-title">Company List</h4>
             <div className="d-flex mb-3">
-              <div style={{ marginRight: '0.5rem' }}>
+              <div style={{ marginRight: "0.5rem" }}>
+                <Select
+                  className="h-46px"
+                  options={provinces}
+                  placeholder="Select location"
+                  onChange={(selectedOption) =>
+                    setLocation(selectedOption ? selectedOption.value : "")
+                  }
+                  isClearable
+                />
+              </div>
+              <div style={{ marginRight: "0.5rem", width: "200px" }}>
                 <input
                   type="text"
-                  placeholder="Search by company name..."
+                  placeholder="Enter somthing ..."
                   className="form-control"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                />
-              </div>
-              <div style={{ marginRight: '0.5rem' }}>
-                <input
-                  type="text"
-                  placeholder="Filter by location..."
-                  className="form-control"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
                 />
               </div>
               <Button className="btn btn-primary" onClick={fetchAllData}>
@@ -132,7 +158,6 @@ const CompanyList: React.FC = () => {
                 )}
               </>
             )}
-
             <div className="d-flex justify-content-end mt-4">
               <Pagination
                 pageCurrent={pageNumber}

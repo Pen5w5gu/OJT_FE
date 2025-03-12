@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedLayouts from "../layouts/defautlLayout/DefaultLayout";
-import Table from "../pages/protected/tabletest/Table";
 import HomeStudent from "../pages/public/Home";
 import StudentLayout from "../layouts/defautlLayout/StudentLayout";
 import Companies from "../pages/public/Companies";
@@ -19,6 +18,7 @@ import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
 import InternshipDetail from "../pages/protected/student/InternshipDetail";
+import WelcomeManager from "../pages/protected/WelcomeManager";
 
 const AppRoute: React.FC = () => {
   return (
@@ -41,17 +41,21 @@ const AppRoute: React.FC = () => {
         <Route path="/profile" element={<Profile />} />
       </Route>
 
-      <Route element={<DefaultLayout />}>
-        <Route path="/help" element={<Table />} />
-      </Route>
-
       <Route element={<AuthLayouts />}>
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
       {/* Protected Routes */}
       <Route element={<ProtectedLayouts />}>
-        <Route path="/" element={<Table />} />
+        <Route
+          path="/manager/welcome"
+          element={
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+              <WelcomeManager />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/manager/internship/list"
           element={

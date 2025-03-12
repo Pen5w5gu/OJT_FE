@@ -5,15 +5,42 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5028/api/Internship";
 
+<<<<<<< HEAD
 const fetchInternships = async (): Promise<Internship[]> => {
+=======
+export const fetchInternships = async (
+  pageNumber: number = 1,
+  pageSize: number = 10,
+  searchTerm: string = "",
+  companyId: number = 0,
+  majorId: number = 0
+): Promise<{ items: Internship[]; totalPages: number }> => {
+>>>>>>> origin/QMN_test_2
   try {
-    const response = await axiosInstance.get(`${API_URL}/GetAllInternship`);
-    return response.data.data;
+    const response = await axiosInstance.get(`${API_URL}/Internship-page-by-company`, {
+      params: {
+        CompanyId: companyId,
+        MajorId: majorId,
+        SearchTerm: searchTerm,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+      },
+    });
+
+    if (response.data && response.data.data) {
+      return {
+        items: response.data.data.items || [],
+        totalPages: response.data.data.totalPages || 1,
+      };
+    }
+
+    throw new Error("Invalid response format");
   } catch (error) {
     console.error("Error fetching internships:", error);
-    return [];
+    return { items: [], totalPages: 1 };
   }
 };
+<<<<<<< HEAD
 
 const fetchAllInternships = async (
   pageNumber: number = 1,
@@ -60,3 +87,5 @@ const fetchInternshipById = async (id: string): Promise<Internship | null> => {
 }
 
 export { fetchInternships, fetchInternshipById, fetchAllInternships };
+=======
+>>>>>>> origin/QMN_test_2
