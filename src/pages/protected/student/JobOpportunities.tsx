@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Company, Internship, Major } from '../../../types/DataTypes';
-import { fetchMajors } from '../../../services/MajorServices';
 import { fetchAllCompanies } from '../../../services/CompanyServices';
 import { fetchAllInternships } from '../../../services/InternshipServices';
 import avatarCompany from "../../../assets/images/avatarCompany/67c66a67e42a81741056615.webp"
 import { Link } from 'react-router-dom';
+import { fetchMajorFilters } from '../../../services/MajorServices';
 
 const JobOpportunities: React.FC = () => {
     const [majorData, setMajorData] = useState<Major[]>([]);
@@ -24,7 +24,7 @@ const JobOpportunities: React.FC = () => {
     const fetchMajorList = async () => {
         try {
             setLoading(true);
-            const majorList = await fetchMajors();
+            const majorList = await fetchMajorFilters();
             if (Array.isArray(majorList)) {
                 setMajorData(majorList);
             } else {

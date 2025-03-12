@@ -35,12 +35,54 @@ const fetchCompanies = async (
   }
 };
 
-
-export const fetchCompanyFilter = async (
-): Promise<{ items: CompanyFilter[]}> => {
+const fetchAllCompanies = async (
+  pageNumber: number = 1,
+  pageSize: number = 10,
+  searchTerm: string = "",
+  location: string = ""
+): Promise<Company[]> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/companies`, {
-      
+      params: {
+        SearchTerm: searchTerm,
+        Location: location,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+      },
+    });
+
+    if (response.data && response.data.data) {
+      return response.data.data.items
+    }
+
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return []
+  }
+};
+
+const fetchCompanyById = async (id: string): Promise<Company | null> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies/${id}`);
+    if (response.data && response.data.data) {
+      return response.data.data
+    }
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return null;
+  }
+}
+
+export { fetchCompanies, fetchAllCompanies, fetchCompanyById };
+
+
+export const fetchCompanyFilter = async (
+): Promise<{ items: CompanyFilter[] }> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies`, {
+
     });
 
     if (response.data && response.data.data) {
@@ -52,6 +94,6 @@ export const fetchCompanyFilter = async (
     throw new Error("Invalid response format");
   } catch (error) {
     console.error("Error fetching Filters companies:", error);
-    return { items: []};
+    return { items: [] };
   }
 };

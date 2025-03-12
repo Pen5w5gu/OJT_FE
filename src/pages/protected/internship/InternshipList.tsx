@@ -181,11 +181,11 @@ const InternshipList: React.FC = () => {
                                 <i className="ti-trash"></i>
                               </button>
                             </td>
-                          </tr>
+                          </tr >
                         ))}
-                      </tbody>
-                    </table>
-                  </div>
+                      </tbody >
+                    </table >
+                  </div >
                 ) : (
                   <p className="text-warning">No internships available.</p>
                 )}
@@ -198,10 +198,10 @@ const InternshipList: React.FC = () => {
                 paginate={setPageNumber}
               />
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </div >
+        </div >
+      </div >
+    </div >
   );
 };
 

@@ -17,8 +17,8 @@ import { Role } from "../types/DataTypes";
 import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
-import WelcomeManager from "../pages/protected/WelcomeManager";
 import InternshipDetail from "../pages/protected/student/InternshipDetail";
+import WelcomeManager from "../pages/protected/WelcomeManager";
 
 const AppRoute: React.FC = () => {
   return (
@@ -40,18 +40,18 @@ const AppRoute: React.FC = () => {
         <Route path="/cvStudent" element={<CvStudent />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
-      
+
       <Route element={<AuthLayouts />}>
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
       {/* Protected Routes */}
       <Route element={<ProtectedLayouts />}>
-      <Route
+        <Route
           path="/manager/welcome"
           element={
             <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
-              <WelcomeManager/>
+              <WelcomeManager />
             </ProtectedRoute>
           }
         />

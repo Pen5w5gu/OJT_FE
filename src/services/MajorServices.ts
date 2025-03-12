@@ -9,7 +9,7 @@ const API_URL = "http://localhost:5028/api/Major";
 export const fetchMajorFilters = async (): Promise<MajorFilter[]> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/GetAllMajor`);
-    
+
     // Kiểm tra nếu response có data và đúng format
     if (response.data && response.data.data) {
       return response.data.data; // Trả về danh sách majors từ `data`
