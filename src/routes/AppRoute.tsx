@@ -18,6 +18,7 @@ import { ForbiddenError } from "../pages/exception/403-forbidden";
 import ErrorLayout from "../layouts/errorLayout/ErrorLayout";
 import CompanyList from "../pages/protected/company/CompanyList";
 import InternshipDetail from "../pages/protected/student/InternshipDetail";
+import ProposalCreate from "../pages/protected/student/ProposalCreate";
 import WelcomeManager from "../pages/protected/WelcomeManager";
 
 const AppRoute: React.FC = () => {
@@ -37,6 +38,8 @@ const AppRoute: React.FC = () => {
         <Route path="/company/detail/:id" element={<CompanyDetail />} />
         <Route path="/internship/list" element={<JobOpportunities />} />
         <Route path="/internship/detail/:id" element={<InternshipDetail />} />
+        <Route path="/InternshipProposals/:id" element={<InternshipProposals />} />
+        <Route path="/InternshipProposals/create" element={<ProposalCreate />} />
         <Route path="/cvStudent" element={<CvStudent />} />
         <Route path="/profile" element={<Profile />} />
       </Route>

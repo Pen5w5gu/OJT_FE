@@ -1,5 +1,32 @@
+.gap-10{
+  gap: 10px;
+}
 .align-items-center {
   align-items: center;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #00b14f;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(0, 177, 79,0.3);
 }
 
 #summary-bg{
@@ -415,6 +442,14 @@
   width: calc(33% - 24px);
 }
 
+
+
+.sticky {
+  position: sticky;
+  top: 20px; /* Khoảng cách từ đỉnh khi sticky */
+  z-index: 10; /* Đảm bảo nó nằm trên các phần tử khác nếu cần */
+}
+
 .job-detail__body{
   display: flex;
     gap: 24px;
@@ -530,6 +565,14 @@
 }
 
 .job-detail__company--link a {
+  color: #00b14f;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: .175px;
+  line-height: 22px;
+}
+.job-detail__company--link button{
   color: #00b14f;
   font-size: 14px;
   font-style: normal;

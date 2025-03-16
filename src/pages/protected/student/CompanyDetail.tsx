@@ -204,7 +204,6 @@ const CompanyDetail: React.FC = () => {
                                                             </span>
                                                         </a>
                                                     </div>
-
                                                 </div>
                                             )}
                                         </div>

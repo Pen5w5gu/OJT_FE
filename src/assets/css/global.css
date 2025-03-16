@@ -21,3 +21,8 @@ h2{
 .h-46px .css-13cymwt-control{
     height: 46px !important;
 }
+
+input[type="text" i] {
+    padding-block: 1px;
+    padding-inline: 2px;
+}

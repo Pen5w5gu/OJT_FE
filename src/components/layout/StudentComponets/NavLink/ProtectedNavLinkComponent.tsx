@@ -20,7 +20,7 @@ function ProtectedNavLinkComponent() {
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/internship/detail" className="nav-link">
+                <NavLink to="/InternshipProposals/:id" className="nav-link">
                     My OJT Proposals
                 </NavLink>
             </li>
