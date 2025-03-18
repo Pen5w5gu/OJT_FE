@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/AuthService";
 import Swal from "sweetalert2";
 import { Account, Role } from "../../../types/DataTypes";
-
+import logo from "/FPT_University_logo.webp";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ const LoginPage = () => {
             <div className="col-lg-4 mx-auto">
               <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div className="brand-logo">
-                  <img src="../../images/logo.svg" alt="logo" />
+                <img src={logo} alt="logo" />
                 </div>
                 <h4>Hello! let's get started</h4>
                 <h6 className="font-weight-light">Sign in to continue.</h6>

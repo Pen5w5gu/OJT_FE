@@ -20,6 +20,7 @@ import CompanyList from "../pages/protected/company/CompanyList";
 import InternshipDetail from "../pages/protected/student/InternshipDetail";
 import ProposalCreate from "../pages/protected/student/ProposalCreate";
 import WelcomeManager from "../pages/protected/WelcomeManager";
+import StudentAppliedList from "../pages/protected/manager-student/StudentAppliedList";
 
 const AppRoute: React.FC = () => {
   return (
@@ -72,6 +73,15 @@ const AppRoute: React.FC = () => {
           element={
             <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
               <CompanyList />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/manager/student-applied/company/:companyId"
+          element={
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <StudentAppliedList />
             </ProtectedRoute>
           }
         />

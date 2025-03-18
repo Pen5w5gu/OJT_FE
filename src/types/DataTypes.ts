@@ -1,8 +1,10 @@
+import { ApplyStatus } from "./StatusEnum";
+
 export interface Internship {
   internshipId: number;
   position: string;
   description: string;
-  requirment: string;
+  requirement: string;
   benefits: string;
   salary: number;
   companyName: string;
@@ -38,4 +40,18 @@ export enum Role {
   ADMIN = "Admin",
   STUDENT = "Student",
   HR_STAFF = "HRstaff",
+}
+
+
+export interface StudentApplied {
+  studentId: number;
+  studentCode: string;
+  major: string;
+  address: string;
+  cvImage: string;
+  accountId: number;
+  applyId: number;
+  timeApply: string; // Date dạng string ISO
+  applyStatus: string;
+  internshipPosition: string;
 }
