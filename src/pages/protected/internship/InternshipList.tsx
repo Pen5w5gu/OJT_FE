@@ -146,12 +146,10 @@ const InternshipList: React.FC = () => {
                         <tr>
                           <th>#</th>
                           <th>Position</th>
-                          <th>Description</th>
-                          <th>Requirement</th>
-                          <th>Benefits</th>
-                          <th>Salary</th>
+
                           <th>Company</th>
                           <th>Major</th>
+                          <th>Salary</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -160,11 +158,9 @@ const InternshipList: React.FC = () => {
                           <tr key={internship.internshipId}>
                             <td>{index + 1 + (pageNumber - 1) * pageSize}</td>
                             <td>{internship.position}</td>
-                            <td>{internship.description}</td>
-                            <td>{internship.requirment}</td>
-                            <td>{internship.benefits}</td>
-                            <td>${internship.salary}</td>
+
                             <td>{internship.companyName}</td>
+                            <td>${internship.salary}</td>
                             <td>{internship.majorName}</td>
                             <td>
                               <Button

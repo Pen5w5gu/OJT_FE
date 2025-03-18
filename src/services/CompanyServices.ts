@@ -97,3 +97,18 @@ export const fetchCompanyFilter = async (
     return { items: [] };
   }
 };
+
+export const getCompanyByAccountID = async (accountId: number): Promise<Company | null> => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companiesbyAccount/${accountId}`);
+
+    if (response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    throw new Error("Invalid response format");
+  } catch (error) {
+    console.error("Error fetching company by account ID:", error);
+    return null;
+  }
+};
