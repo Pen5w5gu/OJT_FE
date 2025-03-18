@@ -140,7 +140,6 @@ const CompanyDetail: React.FC = () => {
                                     <div className="job-list-default">
 
                                     </div>
-
                                 </div>
 
                             </div>
