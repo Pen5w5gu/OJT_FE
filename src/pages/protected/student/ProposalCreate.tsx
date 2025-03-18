@@ -3,12 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { Internship } from "../../../types/DataTypes";
 import { fetchInternshipById } from "../../../services/InternshipServices";
 
-const avatarCompany = "/src/assets/images/samples/300x300/1.jpg"; // Cập nhật đường dẫn nếu cần thiết
+const avatarCompany = "/src/assets/images/samples/300x300/1.jpg";
 const InternshipDetail: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { id } = useParams<{ id: string }>();
     const [internshipData, setInternshipData] = useState<Internship>();
+
     const fetchInternshipDetail = async () => {
         try {
             setLoading(true);
@@ -32,12 +33,13 @@ const InternshipDetail: React.FC = () => {
     useEffect(() => {
         fetchInternshipDetail();
     }, [id])
+
     return (
         <div className="container-fluid bg-light">
             <div className="container p-5">
                 <div className="body-partner-detail">
-                    <div className="job-detail__body">
-                        <div className="job-detail__body-left">
+                    <div className="job-detail__body" style={{ display: 'flex', gap: '2rem' }}>
+                        <div className="job-detail__body-left" style={{ flex: 1 }}>
                             <div id="job-detail__box--left job-detail__info" className="job-detail__box--left job-detail__info">
                                 <div className="d-flex justify-content-between align-items-center job-detail__information-detail--title-container">
                                     <h2 className="job-detail__information-detail--title">Create OJT Proposal</h2>
@@ -59,51 +61,58 @@ const InternshipDetail: React.FC = () => {
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Assigned Tasks</p>
-                                                <input className="form-control" type="text" id="taskDescription" />
+                                                <input className="form-control" placeholder="Describe the tasks you are doing" type="text" id="taskDescription" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Company Name</p>
-                                                <input className="form-control" type="text" id="companyName" />
+                                                <input className="form-control" placeholder="Enter Company Name" type="text" id="companyName" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Address</p>
-                                                <input className="form-control" type="text" id="address" />
+                                                <input className="form-control" placeholder="Enter Company Address" type="text" id="address" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Location</p>
-                                                <input className="form-control" type="text" id="address" />
+                                                <input className="form-control" placeholder="Enter Company Location" type="text" id="address" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Company Logo</p>
-                                                <input className="form-control" type="text" id="companyLogo" />
+                                                <input type="file" className="form-control" id="attachImageInput"></input>
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Employee Size</p>
-                                                <input className="form-control" type="text" id="employeeSize" />
+                                                <input className="form-control" placeholder="Enter Employee Size" type="text" id="employeeSize" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>TaxNumber</p>
-                                                <input className="form-control" type="text" id="taxNumber" />
+                                                <input className="form-control" placeholder="Enter TaxNumber" type="text" id="taxNumber" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>Website</p>
-                                                <input className="form-control" type="text" id="websiteURL" />
+                                                <input className="form-control" placeholder="Enter Website" type="text" id="websiteURL" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>HR Mail</p>
-                                                <input className="form-control" type="text" id="websiteURL" />
+                                                <input className="form-control" placeholder="Enter HR Mail" type="text" id="websiteURL" />
                                             </div>
                                             <div className="job-description__item">
                                                 <p>HR Name</p>
-                                                <input className="form-control" type="text" id="hrName" />
+                                                <input className="form-control" placeholder="Enter HR Name" type="text" id="hrName" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="job-detail__body-right">
-                            <div className="job-detail__box--right job-detail__company sticky">
+                        <div className="job-detail__body-right" style={{ width: '300px' }}>
+                            <div
+                                className="job-detail__box--right job-detail__company sticky"
+                                style={{
+                                    position: 'sticky',
+                                    top: '20px',
+                                    zIndex: 10
+                                }}
+                            >
                                 <div className="job-detail__company--link">
                                     <button className="btn">Save</button>
                                 </div>
@@ -113,16 +122,13 @@ const InternshipDetail: React.FC = () => {
                 </div>
 
                 <div className="body-partner-detail">
-
                     <div className="row main">
                         <div className="left col-md-9">
-
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div >
+        </div>
     )
 }
 

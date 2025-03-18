@@ -6,6 +6,7 @@
 }
 
 .form-control {
+  font-size: 14px !important;
   display: block;
   width: 100%;
   height: calc(1.5em + .75rem + 2px);
@@ -19,6 +20,12 @@
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.form-control::placeholder {
+  padding-left: 10px;
+  font-size: 14px;
 }
 
 .form-control:focus {
@@ -837,4 +844,23 @@
 
 .title-location{
  color: #263a4d;
+}
+
+.job-detail__body {
+  display: flex;
+  gap: 2rem;
+}
+
+.job-detail__body-left {
+  flex: 1;
+}
+
+.job-detail__body-right {
+  width: 300px; /* hoặc bất kỳ width phù hợp */
+}
+
+.job-detail__box--right.sticky {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
 }

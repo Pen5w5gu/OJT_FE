@@ -35,14 +35,79 @@ const AppRoute: React.FC = () => {
       {/* Protected Routes */}
       <Route element={<StudentLayout />}>
         <Route path="/" element={<HomeStudent />} />
-        <Route path="/company/list" element={<Companies />} />
-        <Route path="/company/detail/:id" element={<CompanyDetail />} />
-        <Route path="/internship/list" element={<JobOpportunities />} />
-        <Route path="/internship/detail/:id" element={<InternshipDetail />} />
-        <Route path="/InternshipProposals/:id" element={<InternshipProposals />} />
-        <Route path="/InternshipProposals/create" element={<ProposalCreate />} />
-        <Route path="/cvStudent" element={<CvStudent />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route
+          path="/company/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <Companies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/company/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <Companies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/company/detail/:id"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <CompanyDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/internship/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <JobOpportunities />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/internship/detail/:id"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <InternshipDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/InternshipProposals/:id"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <InternshipProposals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/InternshipProposals/create"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <ProposalCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cvStudent"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <CvStudent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STUDENT]}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       <Route element={<AuthLayouts />}>

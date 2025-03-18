@@ -1,139 +1,164 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { fetchCompanyById } from "../../../services/CompanyServices";
+import { Company, Internship } from "../../../types/DataTypes";
+import { fetchAllInternships } from "../../../services/InternshipServices";
 
+const avatarCompany = "/src/assets/images/samples/300x300/1.jpg"; // Cập nhật đường dẫn nếu cần thiết
+const CompanyDetail: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-const InternshipProposals: React.FC = () => {
+    const [CompanyData, setCompanyData] = useState<Company>();
+    const [internshipList, setInternshipList] = useState<Internship[]>([]);
+    const [pageJob, setPageJob] = useState<number>(1);
+    const [totalPageJob, setTotalPageJob] = useState<number>(0);
+
+    const [jobSearch, setJobSearch] = useState<string>("");
+
+    const { id } = useParams<{ id: string }>();
+    const fetchCompanyDetail = async () => {
+        try {
+            setLoading(true);
+            if (id) {
+                const data = await fetchCompanyById(id)
+                if (data) {
+                    setCompanyData(data);
+                } else {
+                    console.error("Fetched data is null");
+                }
+            } else {
+                console.error("ID is undefined");
+            }
+        } catch (error) {
+            setError("Failed to fetch company details");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const fetchJobByCompany = async (id: string) => {
+        try {
+            setLoading(true);
+            const jobs = await fetchAllInternships(
+                pageJob,
+                5,
+                jobSearch,
+                null,
+                parseInt(id)
+            )
+            setInternshipList(jobs.items);
+            setTotalPageJob(jobs.totalPages);
+        } catch {
+            setError("Failed to fetch internship list.");
+        } finally {
+            setLoading(false);
+        }
+    }
+    const prevPage = async () => {
+        if (pageJob > 1) {
+            await setPageJob(pageJob - 1)
+        }
+    }
+    const nextPage = async () => {
+        if (pageJob < totalPageJob) {
+            await setPageJob(pageJob + 1)
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+            fetchCompanyDetail();
+            fetchJobByCompany(id);
+        } else {
+            console.error("ID is undefined");
+        }
+    }, [id, pageJob]);
 
     return (
-        <div className="col-lg-12 grid-margin stretch-card">
-            <div className="card">
-                <div className="card-body">
-                    <h4 className="card-title">Bordered table</h4>
-                    <a className="btn btn-dark">
-                        <i className="ti-plus mr-1"></i>
-                        Add New OJT Proposal
-                    </a>
-                    <a className="btn btn-primary ml-2">
-                        <i className="ti-download mr-1"></i>
-                        Tải file hướng dẫn
-                    </a>
-                    <div className="table-responsive pt-3">
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Job Position
-                                    </th>
-                                    <th>
-                                        Company
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th>
-                                        Information
-                                    </th>
-                                    <th>
-                                        Process Note
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        Herman Beck
-                                    </td>
-                                    <td>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-success" role="progressbar" style={{ width: '25%' }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100}></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $ 77.99
-                                    </td>
-                                    <td>
-                                        May 15, 2015
-                                    </td>
-                                    <td>
+        <div className="container-fluid bg-light">
+            <div className="container p-5">
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        2
-                                    </td>
-                                    <td>
-                                        Messsy Adam
-                                    </td>
-                                    <td>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-danger" role="progressbar" style={{ width: '75%' }} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}></div>
+                <div className="body-partner-detail">
+                    <div className="job-detail__body">
+                        <div className="job-detail__body-left">
+                            <div id="job-detail__box--left job-detail__info" className="job-detail__box--left job-detail__info">
+                                {CompanyData ? (
+                                    <>
+                                        <div className="job-detail__info--title">
+                                            <h1 className="bold job-detail__info--title">Job Position</h1>
                                         </div>
-                                    </td>
-                                    <td>
-                                        $245.30
-                                    </td>
-                                    <td>
-                                        July 1, 2015
-                                    </td>
-                                    <td>
+                                        <div className="row">
+                                            <div className="summary-item col-md-6 mb-2 mt-4">
+                                                <b>
+                                                    <i className=""></i>
+                                                    Company Name:&nbsp;
+                                                </b>
+                                                XYZ Analytics
+                                            </div>
+                                            <div className="summary-item col-md-6 mb-2 mt-4">
+                                                <b>
+                                                    <i className=""></i>
+                                                    Status:&nbsp;
+                                                </b>
+                                                <span >
+                                                    Done
+                                                </span>
+                                            </div>
+                                            <div className="summary-item col-md-6 mb-2 mt-4">
+                                                <b>
+                                                    <i className=""></i>
+                                                    Tax Number:&nbsp;
+                                                </b>
+                                                <span>
+                                                    <code>
+                                                        0109129844
+                                                    </code>
+                                                </span>
+                                            </div>
+                                            <div className="summary-item col-md-6 mb-2 mt-4">
+                                                <b>
+                                                    <i className=""></i>
+                                                    Address:&nbsp;
+                                                </b>
+                                                <span>
+                                                    Level 13-17, Leadvisors Tower, 643 Đ. Phạm Văn Đồng, Street, Nam Từ Liêm, Hà Nội
+                                                </span>
+                                            </div>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        John Richards
-                                    </td>
-                                    <td>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-warning" role="progressbar" style={{ width: '90%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}></div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        $138.00
-                                    </td>
-                                    <td>
-                                        Apr 12, 2015
-                                    </td>
-                                    <td>
+                                    </>
+                                ) : (
+                                    <div>NOT FOUND</div>
+                                )}
+                            </div>
+                            <div id="job-detail__box--left job-detail__info" className="job-detail__box--left job-detail__info">
+                                <div className="d-flex justify-content-between align-items-center job-detail__information-detail--title-container">
+                                    <h2 className="job-detail__information-detail--title">Infomation</h2>
+                                </div>
+                                <div className="box-body">
+                                    <div className="job-list-default">
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        4
-                                    </td>
-                                    <td>
-                                        Peter Meggik
-                                    </td>
-                                    <td>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-primary" role="progressbar" style={{ width: '50%' }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100}></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $ 77.99
-                                    </td>
-                                    <td>
-                                        May 15, 2015
-                                    </td>
-                                    <td></td>
-                                </tr>
+                                    </div>
 
-                            </tbody>
-                        </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="right col-md-3 ">
+                            <div className="image company-logo">
+                                <img src={avatarCompany} className="" alt="hcl-logo" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
-        </div>
-    );
+
+        </div >
+    )
+
 }
 
-export default InternshipProposals;
+export default CompanyDetail
