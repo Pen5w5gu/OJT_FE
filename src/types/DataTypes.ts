@@ -39,4 +39,3 @@ export enum Role {
   STUDENT = "Student",
   HR_STAFF = "HRstaff",
 }
-
