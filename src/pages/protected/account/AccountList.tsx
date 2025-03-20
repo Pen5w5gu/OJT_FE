@@ -2,70 +2,55 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { Button } from "react-bootstrap";
 import Pagination from "../../../components/common/Pagination";
-import { fetchInternships } from "../../../services/InternshipServices";
-import { fetchCompanyFilter } from "../../../services/CompanyServices";
-import { fetchMajorFilters } from "../../../services/MajorServices";
-import { Internship } from "../../../types/DataTypes";
+import { Account, Internship } from "../../../types/DataTypes";
 import { useNavigate } from "react-router-dom";
+import { Role, Status } from "../../../types/StatusEnum";
+import { fetchAllAccounts } from "../../../services/AccountService";
 
-const InternshipList: React.FC = () => {
-  const [internshipData, setInternshipData] = useState<Internship[]>([]);
+
+const AccountList: React.FC = () => {
+  const [accountsData, setAccountData] = useState<Account[]>([])
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [selectedCompany, setSelectedCompany] = useState<number>(0);
-  const [selectedMajor, setSelectedMajor] = useState<number>(0);
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [companies, setCompanies] = useState<
     { value: number; label: string }[]
   >([]);
-  const [majors, setMajors] = useState<{ value: number; label: string }[]>([]);
   const navigate = useNavigate();
+  const statusOptions = Object.values(Status).map(status => ({
+    value: status,
+    label: status
+  }));
+  const roleOptions = Object.values(Role).map(role => ({
+    value: role,
+    label: role
+  }));
 
-  const fetchFilters = async () => {
-    try {
-      const [companyData, majorData] = await Promise.all([
-        fetchCompanyFilter(),
-        fetchMajorFilters(),
-      ]);
 
-      setCompanies(
-        companyData.items.map((company) => ({
-          value: company.companyId,
-          label: company.companyName,
-        }))
-      );
-
-      setMajors(
-        majorData.map((major) => ({
-          value: major.majorId,
-          label: major.majorName,
-        }))
-      );
-    } catch (err) {
-      console.error("Failed to fetch filters", err);
-    }
-  };
 
   const fetchAllData = async () => {
     try {
       setLoading(true);
-      const data = await fetchInternships(
+      const data = await fetchAllAccounts(
         pageNumber,
         pageSize,
         searchKeyword,
-        selectedCompany,
-        selectedMajor
+        selectedRole,
+        selectedStatus
       );
+
       if (data && data.items) {
-        setInternshipData(data.items);
+        console.log({ data: data.items })
+        setAccountData(data.items);
         setTotalPages(data.totalPages);
       } else {
         throw new Error("Invalid data format: expected an object with items.");
       }
-
     } catch (err) {
       setError("Failed to fetch internships.");
     } finally {
@@ -74,12 +59,9 @@ const InternshipList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchFilters();
-  }, []);
-
-  useEffect(() => {
     fetchAllData();
-  }, [pageNumber, pageSize]);
+  }, [searchKeyword, selectedRole, selectedStatus, pageNumber, pageSize]);
+
 
   return (
     <div id="InternshipList" className="row">
@@ -90,21 +72,23 @@ const InternshipList: React.FC = () => {
             <div className="d-flex justify-content-between mb-3 align-items-center">
               <div className="d-flex">
                 <Select
-                  options={companies}
-                  placeholder="Select Company"
+                  options={roleOptions}
+                  placeholder="Select Role"
                   onChange={(selectedOption) =>
-                    setSelectedCompany(
-                      selectedOption ? selectedOption.value : 0
+                    setSelectedRole(
+                      selectedOption ? selectedOption.value : ""
                     )
                   }
                   isClearable
                   className="h-46px mr-2"
                 />
                 <Select
-                  options={majors}
-                  placeholder="Select Major"
+                  options={statusOptions}
+                  placeholder="Select Status"
                   onChange={(selectedOption) =>
-                    setSelectedMajor(selectedOption ? selectedOption.value : 0)
+                    setSelectedStatus(
+                      selectedOption ? selectedOption.value : ""
+                    )
                   }
                   isClearable
                   className="h-46px mr-2"
@@ -140,28 +124,27 @@ const InternshipList: React.FC = () => {
               <p className="text-danger">{error}</p>
             ) : (
               <>
-                {internshipData.length > 0 ? (
+                {accountsData.length > 0 ? (
                   <div className="table-responsive pt-3">
                     <table className="table table-bordered">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Position</th>
-                          <th>Company</th>
-                          <th>Major</th>
-                          <th>Salary</th>
+                          <th>Email</th>
+                          <th>Fullname</th>
+                          <th>role</th>
+                          <th>status</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {internshipData.map((internship, index) => (
-                          <tr key={internship.internshipId}>
+                        {accountsData.map((account, index) => (
+                          <tr key={account.accountId}>
                             <td>{index + 1 + (pageNumber - 1) * pageSize}</td>
-                            <td>{internship.position}</td>
-
-                            <td>{internship.companyName}</td>
-                            <td>${internship.salary}</td>
-                            <td>{internship.majorName}</td>
+                            <td>{account.email}</td>
+                            <td>{account.fullname}</td>
+                            <td>{account.role}</td>
+                            <td>{account.status}</td>
                             <td>
                               <Button
                                 type="button"
@@ -183,7 +166,7 @@ const InternshipList: React.FC = () => {
                     </table >
                   </div >
                 ) : (
-                  <p className="text-warning">No internships available.</p>
+                  <p className="text-warning">No Account available.</p>
                 )}
               </>
             )}
@@ -201,4 +184,4 @@ const InternshipList: React.FC = () => {
   );
 };
 
-export default InternshipList;
+export default AccountList;

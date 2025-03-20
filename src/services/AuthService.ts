@@ -4,6 +4,7 @@ import axiosInstance from "./Axios";
 import { Account } from "../types/DataTypes";
 
 interface JwtPayload {
+  status: string;
   id: string; // ID của user
   name: string; // Tên user
   email: string; // Email user
@@ -41,9 +42,10 @@ const AuthService = {
 
     return {
       accountId: Number(decoded.id), // Chuyển về kiểu số
-      accountName: decoded.name,
-      accountEmail: decoded.email,
-      accountRole: decoded.role,
+      fullname: decoded.name,
+      email: decoded.email,
+      role: decoded.role,
+      status: decoded.status
     };
   },
 

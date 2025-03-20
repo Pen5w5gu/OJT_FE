@@ -76,61 +76,61 @@ const CompanyDetail: React.FC = () => {
     }, [id, pageJob]);
 
     return (
-        <div className="container-fluid bg-light">
+        <div id="InternshipProposal" className="container-fluid bg-light">
             <div className="container p-5">
 
                 <div className="body-partner-detail">
                     <div className="job-detail__body">
                         <div className="job-detail__body-left">
                             <div id="job-detail__box--left job-detail__info" className="job-detail__box--left job-detail__info">
-                                {CompanyData ? (
-                                    <>
-                                        <div className="job-detail__info--title">
-                                            <h1 className="bold job-detail__info--title">Job Position</h1>
-                                        </div>
-                                        <div className="row">
-                                            <div className="summary-item col-md-6 mb-2 mt-4">
-                                                <b>
-                                                    <i className=""></i>
-                                                    Company Name:&nbsp;
-                                                </b>
-                                                XYZ Analytics
-                                            </div>
-                                            <div className="summary-item col-md-6 mb-2 mt-4">
-                                                <b>
-                                                    <i className=""></i>
-                                                    Status:&nbsp;
-                                                </b>
-                                                <span >
-                                                    Done
-                                                </span>
-                                            </div>
-                                            <div className="summary-item col-md-6 mb-2 mt-4">
-                                                <b>
-                                                    <i className=""></i>
-                                                    Tax Number:&nbsp;
-                                                </b>
-                                                <span>
-                                                    <code>
-                                                        0109129844
-                                                    </code>
-                                                </span>
-                                            </div>
-                                            <div className="summary-item col-md-6 mb-2 mt-4">
-                                                <b>
-                                                    <i className=""></i>
-                                                    Address:&nbsp;
-                                                </b>
-                                                <span>
-                                                    Level 13-17, Leadvisors Tower, 643 Đ. Phạm Văn Đồng, Street, Nam Từ Liêm, Hà Nội
-                                                </span>
-                                            </div>
+                                {/* {CompanyData ? (
+                                    <> */}
+                                <div className="job-detail__info--title">
+                                    <h1 className="bold job-detail__info--title">Job Position</h1>
+                                </div>
+                                <div className="row">
+                                    <div className="summary-item col-md-6 mb-2 mt-4">
+                                        <b>
+                                            <i className=""></i>
+                                            Company Name:&nbsp;
+                                        </b>
+                                        XYZ Analytics
+                                    </div>
+                                    <div className="summary-item col-md-6 mb-2 mt-4">
+                                        <b>
+                                            <i className=""></i>
+                                            Status:&nbsp;
+                                        </b>
+                                        <span >
+                                            Done
+                                        </span>
+                                    </div>
+                                    <div className="summary-item col-md-6 mb-2 mt-4">
+                                        <b>
+                                            <i className=""></i>
+                                            Tax Number:&nbsp;
+                                        </b>
+                                        <span>
+                                            <code>
+                                                0109129844
+                                            </code>
+                                        </span>
+                                    </div>
+                                    <div className="summary-item col-md-6 mb-2 mt-4">
+                                        <b>
+                                            <i className=""></i>
+                                            Address:&nbsp;
+                                        </b>
+                                        <span>
+                                            Level 13-17, Leadvisors Tower, 643 Đ. Phạm Văn Đồng, Street, Nam Từ Liêm, Hà Nội
+                                        </span>
+                                    </div>
 
-                                        </div>
-                                    </>
+                                </div>
+                                {/* </>
                                 ) : (
                                     <div>NOT FOUND</div>
-                                )}
+                                )} */}
                             </div>
                             <div id="job-detail__box--left job-detail__info" className="job-detail__box--left job-detail__info">
                                 <div className="d-flex justify-content-between align-items-center job-detail__information-detail--title-container">

@@ -31,16 +31,12 @@ export interface Major {
 
 export interface Account {
   accountId: number;
-  accountName: string;
-  accountRole: string;
-  accountEmail: string;
+  fullname: string;
+  role: string;
+  email: string;
+  status: string;
 }
 
-export enum Role {
-  ADMIN = "Admin",
-  STUDENT = "Student",
-  HR_STAFF = "HRstaff",
-}
 
 
 export interface StudentApplied {

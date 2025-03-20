@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 function PublicNavLinkComponent() {
     return (
@@ -20,9 +20,9 @@ function PublicNavLinkComponent() {
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <button className="btn btn-primary rounded rounded-1">
+                    <Link to="/login" className="btn btn-primary rounded rounded-1">
                         Log in
-                    </button>
+                    </Link>
                 </li>
             </ul>
         </>

@@ -1,7 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import avatar from "../../../../assets/images/faces/face28.jpg";
+import { Account } from "../../../../types/DataTypes";
 
-function ProtectedNavLinkComponent() {
+interface ProtectedNavLinkProps {
+    user: Account;
+}
+
+function ProtectedNavLinkComponent({ user }: ProtectedNavLinkProps) {
     return (
         <ul id="studentPage" className="navbar-nav">
             <li className="nav-item d-flex align-items-center">
@@ -20,7 +25,7 @@ function ProtectedNavLinkComponent() {
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/InternshipProposals/:id" className="nav-link">
+                <NavLink to={`/InternshipProposals/${user.accountId}`} className="nav-link">
                     My OJT Proposals
                 </NavLink>
             </li>
