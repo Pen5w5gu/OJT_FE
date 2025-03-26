@@ -2,6 +2,7 @@
 import { jwtDecode } from "jwt-decode";
 import axiosInstance from "./Axios";
 import { Account } from "../types/DataTypes";
+import { getStudentByAccountId } from "./StudentServices"; // Adjust the path as needed
 
 interface JwtPayload {
   status: string;
@@ -45,13 +46,12 @@ const AuthService = {
       fullname: decoded.name,
       email: decoded.email,
       role: decoded.role,
-      status: decoded.status
+      status: decoded.status,
     };
   },
 
   isTokenExpired: (): boolean => {
     const decoded = AuthService.decodeToken();
-    console.log("Decoded Token:", decoded); // Kiểm tra nội dung token
     if (!decoded) return true;
     return decoded.exp * 1000 < Date.now();
   },
@@ -61,9 +61,13 @@ const AuthService = {
       email,
       password,
     });
-    if (response.data.accessToken) {
-      AuthService.setToken(response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken); // Lưu refreshToken
+    if (response.data.data) {
+      AuthService.setToken(response.data.data);
+      const accountData = AuthService.getUserInfo();
+      if (accountData?.role === "Student") {
+        const studentData = await getStudentByAccountId(accountData.accountId);
+        localStorage.setItem("studentData", JSON.stringify(studentData));
+      }
     }
     return response.data;
   },
@@ -75,12 +79,12 @@ const AuthService = {
     }
 
     try {
-      const response = await axiosInstance.post(`/api/account/logout`, null);
-      localStorage.removeItem("refreshToken");
+      const response = await axiosInstance.post(`api/Auth/signout`, null);
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("studentData");
       return response.data;
     } catch (error) {
-      // console.error('Logout failed: ', error);
+      console.error('Logout failed: ', error);
       throw new Error("Logout failed.");
     }
   },

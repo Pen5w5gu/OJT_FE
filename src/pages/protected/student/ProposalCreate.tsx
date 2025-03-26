@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Internship } from "../../../types/DataTypes";
-import { fetchInternshipById } from "../../../services/InternshipServices";
+import { useNavigate } from "react-router-dom";
 import ImageUploader from "../../../components/layout/ImageUploaderComponent";
 
 const defaultAvatar = "/src/assets/images/samples/300x300/1.jpg";
 
 const ProposalCreate: React.FC = () => {
-    const [loading, setLoading] = useState<boolean>(true);
+    const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
-    const { id } = useParams<{ id: string }>();
-    const [internshipData, setInternshipData] = useState<Internship>();
 
-    // State cho form
+    // Lấy thông tin studentData từ localStorage
+    const studentData = localStorage.getItem("studentData");
+    const parsedStudentData = studentData ? JSON.parse(studentData) : null;
+
     const [formData, setFormData] = useState({
         jobPosition: "",
         taskDescription: "",
@@ -23,10 +22,12 @@ const ProposalCreate: React.FC = () => {
         taxNumber: "",
         websiteURL: "",
         hrMail: "",
-        hrName: ""
+        hrName: "",
+        studentId: parsedStudentData?.studentId || "",
+        status: ""
     });
 
-    // State cho ảnh
+    // Quản lý file ảnh
     const [companyLogo, setCompanyLogo] = useState<File | null>(null);
     const [companyLogoPreview, setCompanyLogoPreview] = useState(defaultAvatar);
     const [evidenceImage, setEvidenceImage] = useState<File | null>(null);
@@ -34,7 +35,7 @@ const ProposalCreate: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [id]: value
         }));
@@ -42,30 +43,25 @@ const ProposalCreate: React.FC = () => {
 
     const handleCompanyLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith("image/")) {
             setCompanyLogo(file);
             const reader = new FileReader();
             reader.onload = () => {
                 setCompanyLogoPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-        } else {
-            alert('Please select an image file');
         }
     };
 
     const handleEvidenceImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith("image/")) {
             setEvidenceImage(file);
-
             const reader = new FileReader();
             reader.onload = () => {
                 setEvidenceImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-        } else {
-            alert('Please select an image file');
         }
     };
 
@@ -73,121 +69,127 @@ const ProposalCreate: React.FC = () => {
         e.preventDefault();
 
         if (!companyLogo || !evidenceImage) {
-            alert('Please provide all required images');
+            alert("Please provide all required images");
             return;
         }
 
-        const submitData = new FormData();
+        const submitFormData = new FormData();
 
-        // Thêm thông tin form
+        // Thêm tất cả các trường từ formData
         Object.entries(formData).forEach(([key, value]) => {
-            submitData.append(key, value);
+            submitFormData.append(key, value);
         });
 
-        // Thêm ảnh
-        submitData.append('companyLogo', companyLogo);
-        submitData.append('evidence', evidenceImage);
+        // Thêm file ảnh với đúng key name theo backend
+        submitFormData.append("CompanyLogo", companyLogo);
+        submitFormData.append("Evidences", evidenceImage);
 
         try {
-            console.log('Form submitted:', submitData);
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('Failed to create proposal');
-        }
-    };
-
-    const fetchInternshipDetail = async () => {
-        try {
-            setLoading(true);
-            if (id) {
-                const data = await fetchInternshipById(id);
-                if (data) {
-                    setInternshipData(data);
+            const response = await fetch(
+                "http://localhost:5028/api/Proposal/CreateProposal",
+                {
+                    method: "POST",
+                    body: submitFormData
                 }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to create proposal");
             }
+            if (response.status === 200) {
+                // Success
+                navigate('/InternshipProposals', {
+                    replace: true, // Prevents going back to form
+                    state: {
+                        success: true,
+                        message: "Proposal created successfully"
+                    }
+                });
+            }
+
         } catch (error) {
-            setError("Failed to fetch internship detail.");
-        } finally {
-            setLoading(false);
+            console.error("Error creating proposal:", error);
+            alert("Failed to create proposal: " + (error as Error).message);
         }
     };
-
-    useEffect(() => {
-        fetchInternshipDetail();
-    }, [id]);
-
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
 
     return (
-        <div id="ProposalCreate" className="container-fluid bg-light">
+        <div className="container-fluid bg-light">
             <div className="container p-5">
                 <form onSubmit={handleSubmit}>
-                    <div className="body-partner-detail">
-                        <div className="job-detail__body" style={{ display: 'flex', gap: '2rem' }}>
-                            <div className="job-detail__body-left" style={{ flex: 1 }}>
-                                <div className="job-detail__box--left job-detail__info">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Create OJT Proposal</h2>
+                    <div className="row">
+                        <div className="col-md-9">
+                            <div className="card mb-4">
+                                <div className="card-body">
+                                    <h2 className="card-title mb-4">Create OJT Proposal</h2>
+
+                                    <div className="mb-4">
+                                        <strong>Evidence Image</strong>
+                                        {evidenceImagePreview && (
+                                            <img
+                                                src={evidenceImagePreview}
+                                                alt="Evidence"
+                                                className="mt-2 mb-2"
+                                                style={{ width: "200px", height: "auto" }}
+                                            />
+                                        )}
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleEvidenceImageChange}
+                                            className="form-control"
+                                        />
                                     </div>
-                                    <div className="d-flex">
-                                        <div className="input-group gap-10 d-flex flex-column">
-                                            <strong>Note: Student must provide evidences of your company</strong>
-                                            {evidenceImagePreview && (
-                                                <img
-                                                    src={evidenceImagePreview}
-                                                    alt="Evidence"
-                                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                                                />
-                                            )}
-                                            <div className="d-flex gap-3 align-items-center">
-                                                <input
-                                                    type="file"
-                                                    accept="image/*"
-                                                    onChange={handleEvidenceImageChange}
-                                                    className="form-control"
-                                                />
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div className="job-detail__box--left job-detail__info">
-                                    <div className="job-detail__information-container">
-                                        <div className="job-description">
-                                            {/* Form inputs */}
-                                            {Object.entries(formData).map(([key, value]) => (
-                                                <div key={key} className="job-description__item">
-                                                    <p>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}</p>
+                                    {Object.entries(formData).map(([key, value]) => {
+                                        if (key === "studentId") {
+                                            return (
+                                                <div className="mb-3" key={key}>
+                                                    <label htmlFor={key} className="form-label">
+                                                        Student ID
+                                                    </label>
                                                     <input
-                                                        className="form-control"
-                                                        placeholder={`Enter ${key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}`}
                                                         type="text"
+                                                        className="form-control"
                                                         id={key}
                                                         value={value}
-                                                        onChange={handleInputChange}
+                                                        disabled
                                                     />
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <div className="mb-3" key={key}>
+                                                <label htmlFor={key} className="form-label">
+                                                    {key.replace(/([A-Z])/g, " $1").trim()}
+                                                </label>
+                                                <input
+                                                    type={key === "hrMail" ? "email" : "text"}
+                                                    className="form-control"
+                                                    id={key}
+                                                    value={value}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="right col-md-3">
-                                <div className="image company-logo d-flex flex-column">
+                        <div className="col-md-3">
+                            <div className="card mb-4">
+                                <div className="card-body">
+                                    <h5 className="card-title mb-3">Company Logo</h5>
                                     <ImageUploader
-                                        defaultImage={defaultAvatar}
+                                        defaultImage={companyLogoPreview}
                                         onImageChange={handleCompanyLogoChange}
-                                        className="company-logo"
+                                        className="w-100 mb-3"
                                     />
-                                </div>
-                                <div className="job-detail__box--right job-detail__company sticky">
-                                    <div className="job-detail__company--link">
-                                        <button className="btn">Save</button>
-                                    </div>
+                                    <button type="submit" className="btn btn-primary w-100">
+                                        Save Proposal
+                                    </button>
                                 </div>
                             </div>
                         </div>

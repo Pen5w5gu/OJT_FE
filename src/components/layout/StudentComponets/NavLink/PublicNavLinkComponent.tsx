@@ -10,7 +10,7 @@ function PublicNavLinkComponent() {
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to="/companies" className="nav-link">
+                    <NavLink to="/company/list" className="nav-link">
                         Companies & Institutions
                     </NavLink>
                 </li>

@@ -7,6 +7,7 @@ export interface Internship {
   requirement: string;
   benefits: string;
   salary: number;
+  companyLogo: string;
   companyName: string;
   companyLocation: string;
   companyAddress: string;
@@ -37,8 +38,6 @@ export interface Account {
   status: string;
 }
 
-
-
 export interface StudentApplied {
   studentId: number;
   studentCode: string;
@@ -50,4 +49,31 @@ export interface StudentApplied {
   timeApply: string; // Date dạng string ISO
   applyStatus: string;
   internshipPosition: string;
+}
+
+export interface Proposal {
+  proposalID: number;
+  jobPosition: string;
+  taskDescription: string;
+  companyName: string;
+  address: string;
+  location: string;
+  companyLogo: string;
+  employeeSize: number;
+  taxNumber: number;
+  websiteURL: string;
+  hrMail: string;
+  hrName: string;
+  studentID: number;
+  status: string;
+  evidences: string;
+}
+
+export interface Apply {
+  studentName: string;
+  timeApply: string;
+  applyId: number;
+  status: string;
+  internshipPosition: string;
+  companyName: string;
 }

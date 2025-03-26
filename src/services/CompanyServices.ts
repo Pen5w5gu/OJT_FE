@@ -75,10 +75,8 @@ const fetchCompanyById = async (id: string): Promise<Company | null> => {
   }
 }
 
-export { fetchCompanies, fetchAllCompanies, fetchCompanyById };
 
-
-export const fetchCompanyFilter = async (
+const fetchCompanyFilter = async (
 ): Promise<{ items: CompanyFilter[] }> => {
   try {
     const response = await axiosInstance.get(`${API_URL}/companies`, {
@@ -112,3 +110,5 @@ export const getCompanyByAccountID = async (accountId: number): Promise<Company 
     return null;
   }
 };
+
+export { fetchCompanies, fetchAllCompanies, fetchCompanyById, fetchCompanyFilter };

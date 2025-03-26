@@ -14,8 +14,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   const user: Account | null = AuthService.getUserInfo();
   const isTokenExpired = AuthService.isTokenExpired();
 
-  console.log("User info:", user);
-  console.log("Token expired:", isTokenExpired);
+  // console.log("User info:", user);
+  // console.log("Token expired:", isTokenExpired);
 
   if (!user || isTokenExpired) {
     // Lưu lại đường dẫn hiện tại vào localStorage để redirect lại sau khi đăng nhập

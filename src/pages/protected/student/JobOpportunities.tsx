@@ -11,15 +11,13 @@ const JobOpportunities: React.FC = () => {
     const [companyData, setCompanyData] = useState<Company[]>([]);
     const [internshipData, setInternshipData] = useState<Internship[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [selectedMajors, setSelectedMajors] = useState<string[]>([]);
-    const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+    const [selectedMajorId, setSelectedMajorId] = useState<number | null>(null);
+    const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [MajorId, setMajorId] = useState<number | null>(null);
-    const [CompanyId, setCompanyId] = useState<number | null>(null);
 
     const fetchMajorList = async () => {
         try {
@@ -60,10 +58,9 @@ const JobOpportunities: React.FC = () => {
                 page,
                 9,
                 searchTerm,
-                MajorId,
-                CompanyId
+                selectedMajorId,
+                selectedCompanyId,
             );
-            console.log(internshipList.items);
             if (internshipList && internshipList.items) {
                 setInternshipData(internshipList.items);
                 setTotalPages(internshipList.totalPages);
@@ -95,39 +92,16 @@ const JobOpportunities: React.FC = () => {
     }
     useEffect(() => {
         fetchAllInternshipList();
-    }, [page, searchTerm]);
+    }, [page, searchTerm, selectedMajorId, selectedCompanyId]);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'major' | 'company') => {
-        const { value, checked } = event.target;
-        if (type === 'major') {
-            if (value === "all") {
-                if (checked) {
-                    setSelectedMajors(majorData.map(major => major.majorName));
-                } else {
-                    setSelectedMajors([]);
-                }
-            } else {
-                if (checked) {
-                    setSelectedMajors([...selectedMajors, value]);
-                } else {
-                    setSelectedMajors(selectedMajors.filter(major => major !== value));
-                }
-            }
-        } else if (type === 'company') {
-            if (value === "all") {
-                if (checked) {
-                    setSelectedCompanies(companyData.map(company => company.companyName));
-                } else {
-                    setSelectedCompanies([]);
-                }
-            } else {
-                if (checked) {
-                    setSelectedCompanies([...selectedCompanies, value]);
-                } else {
-                    setSelectedCompanies(selectedCompanies.filter(company => company !== value));
-                }
-            }
-        }
+    const handleMajorChange = (majorId: string) => {
+        const numericId = majorId ? parseInt(majorId) : null;
+        setSelectedMajorId(numericId);
+    };
+
+    const handleCompanyChange = (companyId: string) => {
+        const numericId = companyId ? parseInt(companyId) : null;
+        setSelectedCompanyId(numericId);
     };
 
     return (
@@ -144,14 +118,25 @@ const JobOpportunities: React.FC = () => {
                                         Major
                                     </button>
                                     <div id="filerDropdown" className="dropdown-menu p-3" style={{ width: '250px' }}>
-                                        <input id="searchDropdown" placeholder="Search" className="mb-2" />
                                         <div>
                                             <label className="d-block">
-                                                <input type="checkbox" onChange={(e) => handleChange(e, 'major')} value="" checked={selectedMajors.length === majorData.length && majorData.length > 0} /> <strong>Select all</strong>
+                                                <input
+                                                    type="radio"
+                                                    name="major"
+                                                    value=""
+                                                    checked={!selectedMajorId}
+                                                    onChange={() => handleMajorChange("")}
+                                                /> <strong>All Majors</strong>
                                             </label>
                                             {majorData.map(major => (
                                                 <label key={major.majorId} className="d-block">
-                                                    <input type="checkbox" onChange={(e) => handleChange(e, 'major')} value={major.majorName} checked={selectedMajors.includes(major.majorName)} /> {major.majorName}
+                                                    <input
+                                                        type="radio"
+                                                        name="major"
+                                                        value={major.majorId}
+                                                        checked={selectedMajorId === major.majorId}
+                                                        onChange={() => handleMajorChange(major.majorId.toString())}
+                                                    /> {major.majorName}
                                                 </label>
                                             ))}
                                         </div>
@@ -162,14 +147,25 @@ const JobOpportunities: React.FC = () => {
                                         Company
                                     </button>
                                     <div id="filerDropdown" className="dropdown-menu p-3" style={{ width: '250px' }}>
-                                        <input id="searchDropdown" placeholder="Search" className="mb-2" />
                                         <div>
                                             <label className="d-block">
-                                                <input type="checkbox" onChange={(e) => handleChange(e, 'company')} value="all" checked={selectedCompanies.length === companyData.length && companyData.length > 0} /> <strong>Select all</strong>
+                                                <input
+                                                    type="radio"
+                                                    name="company"
+                                                    value=""
+                                                    checked={!selectedCompanyId}
+                                                    onChange={() => handleCompanyChange("")}
+                                                /> <strong>All Companies</strong>
                                             </label>
                                             {companyData.map(company => (
                                                 <label key={company.companyId} className="d-block">
-                                                    <input type="checkbox" onChange={(e) => handleChange(e, 'company')} value={company.companyName} checked={selectedCompanies.includes(company.companyName)} /> {company.companyName}
+                                                    <input
+                                                        type="radio"
+                                                        name="company"
+                                                        value={company.companyId}
+                                                        checked={selectedCompanyId === company.companyId}
+                                                        onChange={() => handleCompanyChange(company.companyId.toString())}
+                                                    /> {company.companyName}
                                                 </label>
                                             ))}
                                         </div>
@@ -182,23 +178,26 @@ const JobOpportunities: React.FC = () => {
                             <div className="input-group">
                                 <input placeholder="Search job" value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)} className="form-control" />
-                                <button onClick={() => fetchAllInternshipList()} className="btn btn-primary ml-1 border-1 rounded rounded-1">
-                                    <i className="fa ti-search"></i>
+                                <button
+                                    onClick={() => {
+                                        setSearchTerm("");
+                                    }}
+                                    className="btn btn-warming ml-1 border-1 rounded rounded-1"
+                                >
+                                    <i className="fa ti-trash"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-
-                    {/* Job List */}
                     <div className='row'>
                         {internshipData.map(internship => (
-                            <div className="col-md-4 col-sm-6 feature-job job-ta">
+                            <div key={internship.internshipId} className="col-md-4 col-sm-6 feature-job job-ta">
                                 <div className="feature-job-item">
                                     <div className="box-body d-flex">
                                         <a href="">
                                             <div className="box-company-logo">
                                                 <div className="avatar">
-                                                    <img src={avatarCompany} alt="Avatar Company" />
+                                                    <img src={internship.companyLogo ? internship.companyLogo : avatarCompany} alt="" />
                                                 </div>
                                             </div>
                                         </a>
@@ -225,7 +224,7 @@ const JobOpportunities: React.FC = () => {
                                             </div>
                                             <div className="col-job-info location">
                                                 <span className="text_ellipsis">
-                                                    Hà Nội
+                                                    {internship.companyLocation}
                                                 </span>
                                             </div>
                                         </div>
@@ -252,7 +251,6 @@ const JobOpportunities: React.FC = () => {
                                 </span>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -1,12 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import avatar from "../../../../assets/images/faces/face28.jpg";
 import { Account } from "../../../../types/DataTypes";
+import AuthService from "../../../../services/AuthService"; "../../../../services/AuthService";
 
-interface ProtectedNavLinkProps {
-    user: Account;
-}
 
-function ProtectedNavLinkComponent({ user }: ProtectedNavLinkProps) {
+
+function ProtectedNavLinkComponent() {
     return (
         <ul id="studentPage" className="navbar-nav">
             <li className="nav-item d-flex align-items-center">
@@ -25,13 +24,13 @@ function ProtectedNavLinkComponent({ user }: ProtectedNavLinkProps) {
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to={`/InternshipProposals/${user.accountId}`} className="nav-link">
+                <NavLink to={`/InternshipProposals`} className="nav-link">
                     My OJT Proposals
                 </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center">
-                <NavLink to="/CvStudent" className="nav-link">
-                    My CV
+                <NavLink to="/applyList" className="nav-link">
+                    My Apply
                 </NavLink>
             </li>
             <li className="nav-item nav-profile dropdown d-flex align-items-center">
@@ -51,7 +50,11 @@ function ProtectedNavLinkComponent({ user }: ProtectedNavLinkProps) {
                         <i className="mr-2 ti-user text-primary"></i>
                         Profile
                     </Link>
-                    <a className="dropdown-item">
+                    <a
+                        className="dropdown-item"
+                        onClick={() => AuthService.logOut()}
+                        style={{ cursor: "pointer" }}
+                    >
                         <i className="mr-2 ti-shift-left text-primary"></i>
                         Logout
                     </a>

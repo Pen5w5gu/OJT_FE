@@ -1,5 +1,4 @@
 import { Account } from "../types/DataTypes";
-import { Role } from "../types/StatusEnum";
 import axiosInstance from "./Axios";
 
 const API_URL = "http://localhost:5028/api/Account";
@@ -13,7 +12,6 @@ const fetchAllAccounts = async (
 
 ): Promise<{ items: Account[], totalPages: number }> => {
     try {
-        console.log({ status })
         const response = await axiosInstance.get(`${API_URL}/accounts`, {
             params: {
                 searchTerm: searchTerm,

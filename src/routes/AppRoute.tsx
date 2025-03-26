@@ -6,7 +6,7 @@ import Companies from "../pages/public/Companies";
 import JobOpportunities from "../pages/protected/student/JobOpportunities";
 import DefaultLayout from "../layouts/defautlLayout/DefaultLayout";
 import InternshipProposals from "../pages/protected/student/InternshipProposals";
-import CvStudent from "../pages/protected/student/CvStudent";
+import ApplyList from "../pages/protected/student/ApplyList";
 import Profile from "../pages/protected/student/Profile";
 import CompanyDetail from "../pages/protected/student/CompanyDetail";
 import InternshipList from "../pages/protected/internship/InternshipList";
@@ -68,7 +68,7 @@ const AppRoute: React.FC = () => {
           }
         />
         <Route
-          path="/InternshipProposals/:id"
+          path="/InternshipProposals"
           element={
             <ProtectedRoute allowedRoles={[Role.STUDENT]}>
               <InternshipProposals />
@@ -84,10 +84,10 @@ const AppRoute: React.FC = () => {
           }
         />
         <Route
-          path="/cvStudent"
+          path="/applyList"
           element={
             <ProtectedRoute allowedRoles={[Role.STUDENT]}>
-              <CvStudent />
+              <ApplyList />
             </ProtectedRoute>
           }
         />
