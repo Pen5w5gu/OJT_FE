@@ -98,7 +98,7 @@ const InternshipDetail: React.FC = () => {
                                                     </div>
                                                     <div className="job-description__item">
                                                         <h3>Yêu cầu ứng tuyển</h3>
-                                                        <div className="job-description__item--content">{internshipData.requirment}</div>
+                                                        <div className="job-description__item--content">{internshipData.requirement}</div>
                                                     </div>
                                                     <div className="job-description__item">
                                                         <h3>Thu nhập</h3>

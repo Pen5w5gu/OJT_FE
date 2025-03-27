@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { Button } from "react-bootstrap";
 import Pagination from "../../../components/common/Pagination";
-import { fetchInternships } from "../../../services/InternshipServices";
+import {
+  fetchInternships,
+  deleteInternship
+} from "../../../services/InternshipServices";
 import { fetchCompanyFilter } from "../../../services/CompanyServices";
 import { fetchMajorFilters } from "../../../services/MajorServices";
 import { Internship } from "../../../types/DataTypes";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const InternshipList: React.FC = () => {
   const [internshipData, setInternshipData] = useState<Internship[]>([]);
@@ -65,7 +69,6 @@ const InternshipList: React.FC = () => {
       } else {
         throw new Error("Invalid data format: expected an object with items.");
       }
-
     } catch (err) {
       setError("Failed to fetch internships.");
     } finally {
@@ -73,6 +76,33 @@ const InternshipList: React.FC = () => {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    Swal.fire({
+      title: "Bạn có chắc chắn?",
+      text: "Dữ liệu sẽ không thể phục hồi!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Có, hãy xóa nó!",
+      cancelButtonText: "Hủy",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteInternship(id);
+          Swal.fire("Đã xóa!", "Thông tin thực tập đã được xóa.", "success");
+          // Làm mới danh sách sau khi xóa
+          fetchAllData();
+        } catch (error) {
+          Swal.fire(
+            "Lỗi!",
+            "Xóa thông tin thực tập không thành công.",
+            "error"
+          );
+        }
+      }
+    });
+  };
   useEffect(() => {
     fetchFilters();
   }, []);
@@ -82,7 +112,7 @@ const InternshipList: React.FC = () => {
   }, [pageNumber, pageSize]);
 
   return (
-    <div id="InternshipList" className="row">
+    <div id="Internship-List" className="row">
       <div className="col-lg-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
@@ -127,7 +157,7 @@ const InternshipList: React.FC = () => {
               <div>
                 <Button
                   className="btn btn-primary"
-                  onClick={() => navigate("/add-new-internship")}
+                  onClick={() => navigate("/manager/internship/create")}
                 >
                   Add New
                 </Button>
@@ -163,25 +193,42 @@ const InternshipList: React.FC = () => {
                             <td>${internship.salary}</td>
                             <td>{internship.majorName}</td>
                             <td>
-                              <Button
-                                type="button"
-                                className="btn btn-inverse-info btn-icon"
-                                style={{ marginRight: "0.5rem" }}
+                              <Link
+                                to={`/manager/internship/update/${internship.internshipId}`}
                               >
-                                <i className="ti-pencil-alt"></i>
-                              </Button>
+                                <Button
+                                  type="button"
+                                  className="btn btn-inverse-info btn-icon"
+                                  style={{ marginRight: "0.5rem" }}
+                                >
+                                  <i className="ti-pencil-alt"></i>
+                                </Button>
+                              </Link>
+                              <Link
+                                to={`/manager/internship/details/${internship.internshipId}`}
+                              >
+                                <Button
+                                  type="button"
+                                  className="btn btn-inverse-info btn-icon mr-2"
+                                >
+                                  <i className="ti-eye"></i>
+                                </Button>
+                              </Link>
                               <button
                                 type="button"
                                 className="btn btn-inverse-danger btn-icon"
+                                onClick={() =>
+                                  handleDelete(internship.internshipId)
+                                }
                               >
                                 <i className="ti-trash"></i>
                               </button>
                             </td>
-                          </tr >
+                          </tr>
                         ))}
-                      </tbody >
-                    </table >
-                  </div >
+                      </tbody>
+                    </table>
+                  </div>
                 ) : (
                   <p className="text-warning">No internships available.</p>
                 )}
@@ -194,10 +241,10 @@ const InternshipList: React.FC = () => {
                 paginate={setPageNumber}
               />
             </div>
-          </div >
-        </div >
-      </div >
-    </div >
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

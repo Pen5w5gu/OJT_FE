@@ -4,6 +4,7 @@ import { Company } from "../../../types/DataTypes";
 import { Button } from "react-bootstrap";
 import { fetchCompanies } from "../../../services/CompanyServices";
 import Pagination from "../../../components/common/Pagination";
+import { Link, useNavigate } from "react-router-dom";
 
 const CompanyList: React.FC = () => {
   const [companyData, setCompanyData] = useState<Company[]>([]);
@@ -17,7 +18,7 @@ const CompanyList: React.FC = () => {
   const [provinces, setProvinces] = useState<
     { value: string; label: string }[]
   >([]);
-
+  const navigate = useNavigate();
   const fetchProvinces = async () => {
     try {
       const response = await fetch("https://esgoo.net/api-tinhthanh/1/0.htm");
@@ -71,31 +72,46 @@ const CompanyList: React.FC = () => {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">Company List</h4>
-            <div className="d-flex mb-3">
-              <div style={{ marginRight: "0.5rem" }}>
-                <Select
-                  className="h-46px"
-                  options={provinces}
-                  placeholder="Select location"
-                  onChange={(selectedOption) =>
-                    setLocation(selectedOption ? selectedOption.value : "")
-                  }
-                  isClearable
-                />
+            <div className="d-flex justify-content-between mb-3 align-items-center">
+              <div className="d-flex">
+                <div style={{ marginRight: "0.5rem" }}>
+                  <Select
+                    className="h-46px"
+                    options={provinces}
+                    placeholder="Select location"
+                    onChange={(selectedOption) =>
+                      setLocation(selectedOption ? selectedOption.value : "")
+                    }
+                    isClearable
+                  />
+                </div>
+                <div style={{ marginRight: "0.5rem", width: "200px" }}>
+                  <input
+                    type="text"
+                    placeholder="Enter somthing ..."
+                    className="form-control"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                  />
+                </div>
+                <Button className="btn btn-primary" onClick={fetchAllData}>
+                  Search
+                </Button>
               </div>
-              <div style={{ marginRight: "0.5rem", width: "200px" }}>
-                <input
-                  type="text"
-                  placeholder="Enter somthing ..."
-                  className="form-control"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                />
+
+              <div>
+                <Button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    navigate("/manager/company/create");
+                    window.location.reload(); // Reloads the page after navigation
+                  }}
+                >
+                  Add New
+                </Button>
               </div>
-              <Button className="btn btn-primary" onClick={fetchAllData}>
-                Search
-              </Button>
             </div>
+
             {loading ? (
               <p>Loading companies...</p>
             ) : error ? (
@@ -138,15 +154,33 @@ const CompanyList: React.FC = () => {
                                 type="button"
                                 className="btn btn-inverse-info btn-icon"
                                 style={{ marginRight: "0.5rem" }}
+                                onClick={() => {
+                                  navigate(
+                                    `/manager/company/update/${company.companyId}`
+                                  );
+                                  window.location.reload();
+                                }}
                               >
                                 <i className="ti-pencil-alt"></i>
                               </Button>
+
                               <button
                                 type="button"
-                                className="btn btn-inverse-danger btn-icon"
+                                className="btn btn-inverse-danger btn-icon mr-2"
                               >
                                 <i className="ti-trash"></i>
                               </button>
+
+                              <Link
+                                to={`/manager/company/details/${company.companyId}`}
+                              >
+                                <Button
+                                  type="button"
+                                  className="btn btn-inverse-info btn-icon"
+                                >
+                                  <i className="ti-eye"></i>
+                                </Button>
+                              </Link>
                             </td>
                           </tr>
                         ))}

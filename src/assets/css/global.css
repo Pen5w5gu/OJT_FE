@@ -25,5 +25,5 @@ h2{
 
 input[type="text" i] {
     padding-block: 1px;
-    padding-inline: 2px;
+    /* padding-inline: 2px; */
 }

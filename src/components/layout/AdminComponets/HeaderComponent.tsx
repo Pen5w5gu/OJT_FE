@@ -1,8 +1,29 @@
 import React from "react";
 import logo from "/FPT_University_logo.webp";
+import AuthService from "../../../services/AuthService";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
-  
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await AuthService.logOut(); // Gọi hàm logout từ AuthService
+      Swal.fire({
+        icon: 'success',
+        title: 'Logout Successful',
+        text: 'You have successfully logged out.',
+      });
+
+      navigate("/"); // Chuyển về trang chủ (home) sau khi logout thành công
+    } catch (error: any) {  // Ép kiểu error thành any
+      Swal.fire({
+        icon: 'error',
+        title: 'Logout Failed',
+        text: error?.message || 'An error occurred during logout.',
+      });
+    }
+  };
   return (
     <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -125,7 +146,7 @@ const Header: React.FC = () => {
                 <i className="ti-settings text-primary"></i>
                 Settings
               </a>
-              <a className="dropdown-item">
+              <a className="dropdown-item" onClick={handleLogout}>
                 <i className="ti-power-off text-primary"></i>
                 Logout
               </a>

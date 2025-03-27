@@ -75,7 +75,7 @@ const AuthService = {
     }
 
     try {
-      const response = await axiosInstance.post(`/api/account/logout`, null);
+      const response = await axiosInstance.post(`/api/Auth/signout`, null);
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
       return response.data;
