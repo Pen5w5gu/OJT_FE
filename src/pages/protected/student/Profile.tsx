@@ -76,8 +76,8 @@ const Profile = () => {
         <div id="profile" className="container rounded mt-5 mb-5">
             <div className="row">
                 <div className="col-md-3 border-right">
-                    <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <input
+                    <div className="d-flex flex-column align-items-center text-center p-3 py-5" style={{ gap: '10px' }}>
+                        {/* <input
                             type="file"
                             name="studentImage"
                             id="imageInput"
@@ -103,7 +103,7 @@ const Profile = () => {
                             defaultValue=""
                             hidden
                         />
-                        <small id="imageInputText" className="m-2">Change your profile picture here</small>
+                        <small id="imageInputText" className="m-2">Change your profile picture here</small> */}
                         <span className="font-weight-bold mt-1">{accountData?.fullname}</span>
                         <span className="text-black-50">Status: {studentData?.applyStatus}</span>
                         <span className="">
