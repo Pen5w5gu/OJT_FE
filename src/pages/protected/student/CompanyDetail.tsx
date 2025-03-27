@@ -93,7 +93,7 @@ const CompanyDetail: React.FC = () => {
                                                     <i className=""></i>
                                                     Tax Number:&nbsp;
                                                 </b>
-                                                0109129844
+                                                {CompanyData.phoneNumber}
                                             </div>
                                             <div className="summary-item col-md-6 mb-2 mt-4">
                                                 <b>
@@ -101,10 +101,10 @@ const CompanyDetail: React.FC = () => {
                                                     Website:&nbsp;
                                                 </b>
                                                 <span >
-                                                    <a href="https://www.hcltech.com/?fbclid=IwY2xjawH7OnRleHRuA2FlbQIxMAABHQb9H2-OydGHLYfZjndFV467xBS1jIDukdNA3rZBsk0Pf-zgLHuLsNgIZg_aem_11NuykpZ_ms-Bn0m8r3NDg"
+                                                    <a href={CompanyData.websiteUrl}
                                                         target="_blank"
                                                         style={{ wordBreak: 'break-all' }}>
-                                                        https://www.hcltech.com/?fbclid=IwY2xjawH7OnRleHRuA2FlbQIxMAABHQb9H2-OydGHLYfZjndFV467xBS1jIDukdNA3rZBsk0Pf-zgLHuLsNgIZg_aem_11NuykpZ_ms-Bn0m8r3NDg
+                                                        {CompanyData.websiteUrl}
                                                     </a>
                                                 </span>
                                             </div>
@@ -114,7 +114,7 @@ const CompanyDetail: React.FC = () => {
                                                     Address:&nbsp;
                                                 </b>
                                                 <span>
-                                                    Level 13-17, Leadvisors Tower, 643 Đ. Phạm Văn Đồng, Street, Nam Từ Liêm, Hà Nội
+                                                    {CompanyData.address}, {CompanyData.location}
                                                 </span>
                                             </div>
                                             <div className="summary-item col-md-6 mb-2 mt-4">
@@ -212,7 +212,7 @@ const CompanyDetail: React.FC = () => {
                                 </div>
                                 <div className="right col-md-3 ">
                                     <div className="image company-logo">
-                                        <img src={avatarCompany} className="" alt="hcl-logo" />
+                                        <img src={String(CompanyData.avatar || avatarCompany)} alt="hcl-logo" />
                                     </div>
                                 </div>
                             </div>
