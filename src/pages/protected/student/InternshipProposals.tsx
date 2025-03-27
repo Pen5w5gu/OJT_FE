@@ -57,7 +57,7 @@ const CompanyDetail: React.FC = () => {
                                                     <i className=""></i>
                                                     Status:&nbsp;
                                                 </b>
-                                                <span >
+                                                <span className={`status ${ProposalData.status}`} >
                                                     {ProposalData.status}
                                                 </span>
                                             </div>
@@ -67,9 +67,7 @@ const CompanyDetail: React.FC = () => {
                                                     Location:&nbsp;
                                                 </b>
                                                 <span>
-                                                    <code>
-                                                        {ProposalData.location}
-                                                    </code>
+                                                    {ProposalData.location}
                                                 </span>
                                             </div>
                                             <div className="summary-item col-md-6 mb-2 mt-4">
@@ -87,9 +85,7 @@ const CompanyDetail: React.FC = () => {
                                                     Tax Number:&nbsp;
                                                 </b>
                                                 <span>
-                                                    <code>
-                                                        {ProposalData.taxNumber}
-                                                    </code>
+                                                    {ProposalData.taxNumber}
                                                 </span>
                                             </div>
                                             <div className="summary-item col-md-6 mb-2 mt-4">

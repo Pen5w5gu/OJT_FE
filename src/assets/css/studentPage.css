@@ -966,3 +966,15 @@
 .popup-button:hover {
   background-color: #0056b3;
 }
+
+.status.Pending{
+  color: #E5933F;
+}
+
+.status.Rejected{
+  color: #BB0900;
+}
+
+.status.Approved{
+  color: #8EB15C;
+}

@@ -1,12 +1,20 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Account } from '../../../types/DataTypes';
 import AuthService from '../../../services/AuthService';
 import { getStudentInStorage } from '../../../services/StudentServices';
-const Profile: React.FC = () => {
 
+const Profile = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [accountData, setAccountData] = useState<Account | null>();
     const [studentData, setStudentData] = useState<any>(null);
+    const [cvData, setCvData] = useState<string>("");
+
+    const getCvFileName = (url: string) => {
+        if (!url) return '';
+        const parts = url.split('/');
+        return parts[parts.length - 1];
+    };
+
     const fetchProfileData = async () => {
         try {
             setLoading(true);
@@ -15,6 +23,7 @@ const Profile: React.FC = () => {
             const studentData = await getStudentInStorage();
             console.log({ studentData })
             setStudentData(studentData);
+            setCvData(getCvFileName(studentData?.cvImage));
             return;
         } catch {
             console.error("Failed to fetch profile data.");
@@ -22,6 +31,7 @@ const Profile: React.FC = () => {
             setLoading(false);
         }
     }
+
     useEffect(() => {
         fetchProfileData();
     }, []);
@@ -86,12 +96,30 @@ const Profile: React.FC = () => {
                                 <div className="form-group">
                                     <label>CV<span className="required-color"> <code>*</code></span></label>
                                     <div className="d-flex gap-3 align-items-center">
+                                        <div className="form-control d-flex justify-content-between align-items-center">
+                                            <span className="text-truncate">
+                                                {cvData ? getCvFileName(studentData.cvImage) : 'No file chosen'}
+                                            </span>
+                                            <label htmlFor="cvFile" className="btn btn-sm btn-outline-secondary mb-0">
+                                                Choose File
+                                            </label>
+                                        </div>
                                         <input
                                             type="file"
-                                            value={""}
+                                            id="cvFile"
                                             accept="image/*"
-                                            className="form-control"
+                                            className="d-none"
                                         />
+                                        {studentData?.cvImage && (
+                                            <a
+                                                href={studentData.cvImage}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-outline-primary"
+                                            >
+                                                View CV
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -104,11 +132,6 @@ const Profile: React.FC = () => {
                                 <input type="text" className="form-control" name="Address" value={studentData?.address} readOnly />
                             </div>
                         </div>
-                        {/* <div className="mt-5 text-center">
-                            <button className="btn btn-primary profile-button" type="submit">
-                                Save Profile
-                            </button>
-                        </div> */}
                     </div>
                 </div>
             </div>
