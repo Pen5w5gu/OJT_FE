@@ -13,6 +13,7 @@ export interface Internship {
   companyAddress: string;
   majorName: string;
   companyID: number;
+  majorId: number;
 }
 
 export interface Company {
@@ -22,8 +23,10 @@ export interface Company {
   websiteUrl: string;
   address: string;
   location: string;
+  avatar: File | string;
   accountId: number;
 }
+
 
 export interface Major {
   majorId: number;
@@ -36,6 +39,26 @@ export interface Account {
   role: string;
   email: string;
   status: string;
+}
+
+export interface AccountEntity {
+  accountId: number;
+  fullname: string;
+  role: string;
+  email: string;
+  status: number;
+  age: number;
+  gender: number;
+  password: string;
+  data: object | null;
+}
+
+export interface Student {
+  StudentCode: string
+  Major: string;
+  Address: string;
+  Status: string | null;
+  CvImage: string;
 }
 
 export interface StudentApplied {

@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Role, Status } from "../../../types/StatusEnum";
 import { fetchAllAccounts } from "../../../services/AccountService";
 
-
 const AccountList: React.FC = () => {
-  const [accountsData, setAccountData] = useState<Account[]>([])
+  const [accountsData, setAccountData] = useState<Account[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -22,16 +21,14 @@ const AccountList: React.FC = () => {
     { value: number; label: string }[]
   >([]);
   const navigate = useNavigate();
-  const statusOptions = Object.values(Status).map(status => ({
+  const statusOptions = Object.values(Status).map((status) => ({
     value: status,
-    label: status
+    label: status,
   }));
-  const roleOptions = Object.values(Role).map(role => ({
+  const roleOptions = Object.values(Role).map((role) => ({
     value: role,
-    label: role
+    label: role,
   }));
-
-
 
   const fetchAllData = async () => {
     try {
@@ -45,7 +42,7 @@ const AccountList: React.FC = () => {
       );
 
       if (data && data.items) {
-        console.log({ data: data.items })
+        console.log({ data: data.items });
         setAccountData(data.items);
         setTotalPages(data.totalPages);
       } else {
@@ -62,22 +59,19 @@ const AccountList: React.FC = () => {
     fetchAllData();
   }, [searchKeyword, selectedRole, selectedStatus, pageNumber, pageSize]);
 
-
   return (
     <div id="InternshipList" className="row">
       <div className="col-lg-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Internship List</h4>
+            <h4 className="card-title">Account List</h4>
             <div className="d-flex justify-content-between mb-3 align-items-center">
               <div className="d-flex">
                 <Select
                   options={roleOptions}
                   placeholder="Select Role"
                   onChange={(selectedOption) =>
-                    setSelectedRole(
-                      selectedOption ? selectedOption.value : ""
-                    )
+                    setSelectedRole(selectedOption ? selectedOption.value : "")
                   }
                   isClearable
                   className="h-46px mr-2"
@@ -93,25 +87,23 @@ const AccountList: React.FC = () => {
                   isClearable
                   className="h-46px mr-2"
                 />
-                <div className="d-flex">
-                  <div className=" mr-2">
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      className="form-control"
-                      value={searchKeyword}
-                      onChange={(e) => setSearchKeyword(e.target.value)}
-                    />
-                  </div>
-                  <Button className="btn btn-primary" onClick={fetchAllData}>
-                    Search
-                  </Button>
+                <div style={{ marginRight: "0.5rem", width: "200px" }}>
+                  <input
+                    type="text"
+                    placeholder="Enter somthing ..."
+                    className="form-control"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                  />
                 </div>
+                <Button className="btn btn-primary" onClick={fetchAllData}>
+                  Search
+                </Button>
               </div>
               <div>
                 <Button
                   className="btn btn-primary"
-                  onClick={() => navigate("/add-new-internship")}
+                  onClick={() => navigate("/manager/account/create")}
                 >
                   Add New
                 </Button>
@@ -160,11 +152,11 @@ const AccountList: React.FC = () => {
                                 <i className="ti-trash"></i>
                               </button>
                             </td>
-                          </tr >
+                          </tr>
                         ))}
-                      </tbody >
-                    </table >
-                  </div >
+                      </tbody>
+                    </table>
+                  </div>
                 ) : (
                   <p className="text-warning">No Account available.</p>
                 )}
@@ -177,10 +169,10 @@ const AccountList: React.FC = () => {
                 paginate={setPageNumber}
               />
             </div>
-          </div >
-        </div >
-      </div >
-    </div >
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

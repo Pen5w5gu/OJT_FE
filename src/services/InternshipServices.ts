@@ -82,3 +82,34 @@ const fetchInternshipById = async (id: string): Promise<Internship | null> => {
 }
 
 export { fetchInternships, fetchInternshipById, fetchAllInternships };
+
+
+export const updateInternship = async (id: number, internshipData: any) => {
+  try {
+    const response = await axiosInstance.put(`${API_URL}/Update/${id}`, internshipData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating internship:", error);
+    throw error;
+  }
+};
+
+export const createInternship = async (internshipData: any) => {
+  try {
+    const response = await axios.post( `${API_URL}/CreateInternship`, internshipData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating internship:", error);
+    throw error;
+  }
+};
+
+export const deleteInternship = async (id: number) => {
+  try {
+    const response = await axiosInstance.delete(`${API_URL}/Delete/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating internship:", error);
+    throw error;
+  }
+};

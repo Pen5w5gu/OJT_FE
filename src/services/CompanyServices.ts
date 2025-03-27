@@ -112,3 +112,33 @@ export const getCompanyByAccountID = async (accountId: number): Promise<Company 
 };
 
 export { fetchCompanies, fetchAllCompanies, fetchCompanyById, fetchCompanyFilter };
+
+// Tạo công ty mới (POST)
+export const createCompany = async (companyData: FormData) => {
+  try {
+    const response = await axiosInstance.post(`${API_URL}/companies`, companyData);
+    return response.data;
+  } catch (error) {
+    throw error; // Để lỗi có thể bắt ở nơi gọi service
+  }
+};
+
+// Cập nhật thông tin công ty (PUT)
+export const updateCompany = async (companyData: FormData) => {
+  try {
+    const response = await axiosInstance.put(`${API_URL}/companies`, companyData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Lấy chi tiết công ty (GET)
+export const getCompanyDetails = async (companyId: number) => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/companies/${companyId}`);
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};

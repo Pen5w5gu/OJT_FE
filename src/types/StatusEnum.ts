@@ -16,4 +16,5 @@ export enum Role {
   ADMIN = "Admin",
   STUDENT = "Student",
   HR_STAFF = "HRstaff",
+  STAFF = "StudentServicesDepartmentStaff"
 }

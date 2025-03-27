@@ -69,11 +69,12 @@ const Sidebar: React.FC = () => {
             <span className="menu-title">Accounts</span>
           </NavLink>
         </li>
+        
         <li className="nav-item">
-          <button className="nav-link btn btn-link" onClick={handleNavigate} disabled={loading}>
+          <a className="nav-link" onClick={handleNavigate} >
             <i className="icon-grid menu-icon"></i>
             <span className="menu-title">Applied Students</span>
-          </button>
+          </a>
         </li>
       </ul>
     </nav>
