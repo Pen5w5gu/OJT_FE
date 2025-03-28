@@ -1,6 +1,7 @@
 
 export enum ApplyStatus {
   REJECT = "Reject",
+  REJECTED = "Rejected",
   APPROVED = "Approved",
   PENDING = "Pending",
 }

@@ -25,6 +25,7 @@ import AccountList from "../pages/protected/account/AccountList";
 import AccountDetail from "../pages/protected/account/AccountDetail";
 import CompanyDetails from "../pages/protected/company/CompanyDetails";
 import InternshipDetails from "../pages/protected/internship/InternshipDetails";
+import ProposalList from "../pages/protected/manager-student/ProposalList";
 
 const AppRoute: React.FC = () => {
   return (
@@ -117,7 +118,7 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/account/list"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[Role.ADMIN]}>
               <AccountList />
             </ProtectedRoute>
           }
@@ -125,17 +126,16 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/account/create"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[Role.ADMIN]}>
               <AccountDetail />
             </ProtectedRoute>
           }
         />
         //#region internship
-
         <Route
           path="/manager/internship/list"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[ Role.HR_STAFF]}>
               <InternshipList />
             </ProtectedRoute>
           }
@@ -143,7 +143,7 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/internship/:mode/:internshipId"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[ Role.HR_STAFF]}>
               <InternshipDetails />
             </ProtectedRoute>
           }
@@ -151,20 +151,16 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/internship/:mode"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[ Role.HR_STAFF]}>
               <InternshipDetails />
             </ProtectedRoute>
           }
         />
-
-        
-        #endregion
-
-        //#region Companies
+        #endregion //#region Companies
         <Route
           path="/manager/company/list"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[ Role.STAFF]}>
               <CompanyList />
             </ProtectedRoute>
           }
@@ -172,7 +168,7 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/company/:mode/:companyId"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[Role.STAFF]}>
               <CompanyDetails />
             </ProtectedRoute>
           }
@@ -180,18 +176,25 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/company/:mode/"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[ Role.STAFF]}>
               <CompanyDetails />
             </ProtectedRoute>
           }
         />
         //#endregion
-        
         <Route
           path="/manager/student-applied/company/:companyId"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[Role.HR_STAFF]}>
               <StudentAppliedList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manager/proposal/list"
+          element={
+            <ProtectedRoute allowedRoles={[Role.STAFF]}>
+              <ProposalList />
             </ProtectedRoute>
           }
         />

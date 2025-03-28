@@ -1,3 +1,5 @@
+import { Proposal } from "../types/DataTypes";
+import { ApplyStatus } from "../types/StatusEnum";
 import axiosInstance from "./Axios";
 import { getStudentInStorage } from "./StudentServices";
 
@@ -53,3 +55,38 @@ const createProposal = async (formData: FormData) => {
 };
 
 export { fetchProposalById, createProposal };
+
+export const getAllProposal = async (): Promise<Proposal[]> => {
+    try {
+      const response = await axiosInstance.get(`${API_URL}/GetAllProposal`);
+      if (response.data && response.data.data) {
+        return response.data.data; 
+      }
+      throw new Error("Invalid response format");
+    } catch (error) {
+      console.error("Error fetching GetAllProposal:", error);
+      return [];
+    }
+  };
+
+
+  export const updateProposalStatus = async (
+    proposalId: number,
+    status: ApplyStatus
+  ) => {
+    try {
+      const response = await axiosInstance.put(
+        `/api/Proposal/${proposalId}/status`,
+        status,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating proposal status:", error);
+      throw new Error("Could not update proposal status.");
+    }
+  };
