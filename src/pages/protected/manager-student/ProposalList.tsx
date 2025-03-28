@@ -40,7 +40,7 @@ const ProposalList: React.FC = () => {
 
   const handleViewDetails = async (proposal: Proposal) => {
     try {
-      const student = await fetchStudentDetails(proposal.studentID);      
+      const student = await fetchStudentDetails(proposal.studentID);
       Swal.fire({
         title: `Proposal Details`,
         html: `
@@ -70,14 +70,26 @@ const ProposalList: React.FC = () => {
     }
   };
   const handleUpdateStatus = async (proposalId: number, status: ApplyStatus) => {
-    try {
-      const response = await updateProposalStatus(proposalId, status);
-      Swal.fire("Success", `Proposal status updated to ${status}.`, "success");
-      fetchAllData(); // Reload the data after the update
-    } catch (error) {
-      Swal.fire("Error", "Failed to update proposal status.", "error");
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to ${status.toLowerCase()} this proposal?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const response = await updateProposalStatus(proposalId, status);
+        Swal.fire("Success", `Proposal status updated to ${status}.`, "success");
+        fetchAllData(); // Reload the data after the update
+      } catch (error) {
+        Swal.fire("Error", "Failed to update proposal status.", "error");
+      }
     }
   };
+  
   useEffect(() => {
     fetchAllData();
   }, [pageNumber, pageSize]);
@@ -115,34 +127,39 @@ const ProposalList: React.FC = () => {
                             <td>{proposal.jobPosition}</td>
                             <td>{proposal.companyName}</td>
                             <td>{proposal.studentID}</td>
-                            <td>{proposal.status}</td>
+                            <td className={`status ${proposal.status}`}>{proposal.status}</td>
                             <td>
                               <Button
                                 type="button"
                                 className="btn btn-inverse-info btn-icon mr-2"
                                 onClick={() => handleViewDetails(proposal)}
                               >
-                                 <i className="ti-eye"></i>
+                                <i className="ti-eye"></i>
                               </Button>
+                              {
+                                proposal.status === ApplyStatus.PENDING && (
+                                  <>
+                                    <Button
+                                      type="button"
+                                      className="btn btn-inverse-success btn-icon mr-2"
+                                      onClick={() =>
+                                        handleUpdateStatus(proposal.proposalID, ApplyStatus.APPROVED)
+                                      }
+                                    >
+                                      Apply
+                                    </Button>
+                                    <Button
+                                      type="button"
+                                      className="btn btn-inverse-danger btn-icon"
+                                      onClick={() =>
+                                        handleUpdateStatus(proposal.proposalID, ApplyStatus.REJECTED)
+                                      }
+                                    >
+                                      Reject
+                                    </Button></>
+                                )
+                              }
 
-                              <Button
-                                type="button"
-                                className="btn btn-inverse-success btn-icon mr-2"
-                                onClick={() =>
-                                  handleUpdateStatus(proposal.proposalID, ApplyStatus.APPROVED)
-                                }
-                              >
-                                Apply
-                              </Button>
-                              <Button
-                                type="button"
-                                className="btn btn-inverse-danger btn-icon"
-                                onClick={() =>
-                                  handleUpdateStatus(proposal.proposalID, ApplyStatus.REJECTED)
-                                }
-                              >
-                                Reject
-                              </Button>
                             </td>
                           </tr>
                         ))}

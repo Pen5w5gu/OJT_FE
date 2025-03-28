@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Company, Internship, Major } from '../../../types/DataTypes';
+import { Company, Internship, Major, Student } from '../../../types/DataTypes';
 import { fetchAllCompanies } from '../../../services/CompanyServices';
 import { fetchAllInternships } from '../../../services/InternshipServices';
 import avatarCompany from "../../../assets/images/avatarCompany/67c66a67e42a81741056615.webp"
 import { Link } from 'react-router-dom';
 import { fetchMajorFilters } from '../../../services/MajorServices';
+import { getStudent, getStudentByAccountId, getStudentInStorage } from '../../../services/StudentServices';
 
 const JobOpportunities: React.FC = () => {
     const [majorData, setMajorData] = useState<Major[]>([]);
@@ -14,6 +15,7 @@ const JobOpportunities: React.FC = () => {
     const [selectedMajorId, setSelectedMajorId] = useState<number | null>(null);
     const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [studentData, setStudentData] = useState<Student | null>(null);
 
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -74,10 +76,19 @@ const JobOpportunities: React.FC = () => {
         }
     };
 
+    const fetchStudentByAccountId = async () => {
+        const studentData = await getStudent();
+        console.log({ studentData });
+        if (studentData) {
+            setStudentData(studentData);
+        }
+    }
+
     useEffect(() => {
         fetchMajorList();
         fetchCompanyList();
         fetchAllInternshipList();
+        fetchStudentByAccountId();
     }, []);
 
     const prevPage = async () => {
@@ -108,9 +119,20 @@ const JobOpportunities: React.FC = () => {
         <>
             <div className="container-fluid bg-light">
                 <div className="container vh-100 p-5 ">
+                    {/* Notification */}
+                    {studentData?.applyStatus === "Registered for Internship" && (
+                        <div className="alert alert-danger alert-dismissible fade show">
+                            <div>
+                                <p>LƯU Ý: Tại mỗi đợt apply sinh viên chỉ ứng tuyển duy nhất 01 vị trí. Trường hợp NOT PASSED sẽ được tiếp tục hỗ trợ ứng tuyển doanh nghiệp khác. Vì vậy, sinh viên vui lòng đọc kỹ JD trước khi ứng tuyển!</p>
+                            </div>
+                        </div>
+                    )}
+
+
                     <div className="row">
                         {/* Filter Section */}
                         <div className="col-md-6 mx-auto">
+
                             <div className="d-flex align-items-center mb-3">
                                 <strong className="mr-2">Filter:</strong>
                                 <div className="btn-group mr-2 ml-5">

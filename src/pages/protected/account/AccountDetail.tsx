@@ -17,7 +17,7 @@ const AccountDetail: React.FC = () => {
     Major: "",
     Address: "",
     CvImage: "no data",
-    Status:"Not Registered for Internship"
+    Status: "Not Registered for Internship"
   });
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -119,7 +119,7 @@ const AccountDetail: React.FC = () => {
                     <label className="col-sm-3 col-form-label">Age</label>
                     <div className="col-sm-9">
                       <input
-                      placeholder="Enter age"
+                        placeholder="Enter age"
                         type="text"
                         className="form-control"
                         value={age}
@@ -158,6 +158,7 @@ const AccountDetail: React.FC = () => {
                         <option value="Admin">Admin</option>
                         <option value="Student">Student</option>
                         <option value="HRstaff">HRstaff</option>
+                        <option value="StudentServicesDepartmentStaff">Department Service Staff</option>
                       </select>
                     </div>
                   </div>
@@ -199,7 +200,7 @@ const AccountDetail: React.FC = () => {
                         <label className="col-sm-3 col-form-label">Major</label>
                         <div className="col-sm-9">
                           <input
-                          placeholder="Enter major"
+                            placeholder="Enter major"
                             type="text"
                             className="form-control"
                             value={studentInfo.Major}
@@ -220,7 +221,7 @@ const AccountDetail: React.FC = () => {
                       <div className="form-group row">
                         <label className="col-sm-3 col-form-label">Address</label>
                         <div className="col-sm-9">
-                        <textarea
+                          <textarea
                             placeholder="Enter address"
                             rows={4}
                             className="form-control"
@@ -237,7 +238,7 @@ const AccountDetail: React.FC = () => {
                     </div>
                   </div>
 
-                  
+
                 </>
               )}
 

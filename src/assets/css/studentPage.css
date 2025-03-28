@@ -975,6 +975,10 @@
   color: #BB0900;
 }
 
+.status.Reject{
+  color: #BB0900;
+}
+
 .status.Approved{
   color: #8EB15C;
 }

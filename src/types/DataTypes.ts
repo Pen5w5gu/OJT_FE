@@ -57,7 +57,7 @@ export interface Student {
   StudentCode: string
   Major: string;
   Address: string;
-  Status: string | null;
+  applyStatus: string | null;
   CvImage: string;
 }
 

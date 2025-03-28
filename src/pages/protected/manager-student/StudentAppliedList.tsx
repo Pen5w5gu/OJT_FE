@@ -4,7 +4,10 @@ import Select from "react-select";
 import Pagination from "../../../components/common/Pagination";
 import { fetchMajorFilters } from "../../../services/MajorServices";
 import { StudentApplied } from "../../../types/DataTypes";
-import { fetchStudentApplied } from "../../../services/StudentServices";
+import { fetchStudentApplied, updateApplyStatus } from "../../../services/StudentServices";
+import { ApplyStatus } from "../../../types/StatusEnum";
+import Swal from "sweetalert2";
+import { Button } from "react-bootstrap";
 
 const StudentAppliedList: React.FC = () => {
   const { companyId } = useParams<{ companyId: string }>();
@@ -51,7 +54,7 @@ const StudentAppliedList: React.FC = () => {
         Number(companyId),
         pageNumber,
         pageSize,
-        selectedMajor,  
+        selectedMajor,
         searchTerm
       );
       if (data && data.items) {
@@ -64,6 +67,26 @@ const StudentAppliedList: React.FC = () => {
       setError("Failed to fetch students.");
     } finally {
       setLoading(false);
+    }
+  };
+  const handleUpdateStatus = async (applyId: number, status: ApplyStatus) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to ${status.toLowerCase()} this proposal?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await updateApplyStatus(applyId, status);
+        Swal.fire("Success", `Apply status updated to ${status}.`, "success");
+        fetchStudents(); // Reload the data after the update
+      } catch (error) {
+        Swal.fire("Error", "Failed to update apply status.", "error");
+      }
     }
   };
 
@@ -120,7 +143,7 @@ const StudentAppliedList: React.FC = () => {
                       <th>CV</th>
                       <th>Apply Status</th>
                       <th>Internship Position</th>
-                      <th>Time Applied</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -139,9 +162,34 @@ const StudentAppliedList: React.FC = () => {
                             View CV
                           </a>
                         </td>
-                        <td>{student.applyStatus}</td>
+                        <td className={`status ${student.applyStatus}`}>{student.applyStatus}</td>
                         <td>{student.internshipPosition}</td>
-                        <td>{new Date(student.timeApply).toLocaleString()}</td>
+                        <td>
+                          {
+                            student.applyStatus === ApplyStatus.PENDING && (
+                              <>
+                                <Button
+                                  type="button"
+                                  className="btn btn-inverse-success btn-icon mr-2"
+                                  onClick={() =>
+                                    handleUpdateStatus(student.applyId, ApplyStatus.APPROVED)
+                                  }
+                                >
+                                  Apply
+                                </Button>
+                                <Button
+                                  type="button"
+                                  className="btn btn-inverse-danger btn-icon"
+                                  onClick={() =>
+                                    handleUpdateStatus(student.applyId, ApplyStatus.REJECT)
+                                  }
+                                >
+                                  Reject
+                                </Button>
+                              </>
+
+                            )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

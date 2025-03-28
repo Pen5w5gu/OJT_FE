@@ -110,7 +110,7 @@ const AppRoute: React.FC = () => {
         <Route
           path="/manager/welcome"
           element={
-            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF]}>
+            <ProtectedRoute allowedRoles={[Role.ADMIN, Role.HR_STAFF, Role.STAFF]}>
               <WelcomeManager />
             </ProtectedRoute>
           }

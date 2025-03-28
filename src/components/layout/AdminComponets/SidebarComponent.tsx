@@ -11,8 +11,8 @@ const Sidebar: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [user, setUser] = useState<Account |null>(null);
- 
+  const [user, setUser] = useState<Account | null>(null);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -40,16 +40,11 @@ const Sidebar: React.FC = () => {
 
     try {
       const company = await getCompanyByAccountID(user.accountId);
-      if (company) {
-        setCompanyId(company.companyId);
+
+      if (company !== null) {
+        navigate(`/manager/student-applied/company/${company.companyId}`);
       } else {
         navigate("/403-forbidden")
-     }
-      
-      if (companyId) {
-        navigate(`/manager/student-applied/company/${companyId}`);
-      } else {
-         navigate("/403-forbidden")
       }
     } catch (err) {
       alert("Failed to fetch company.");
