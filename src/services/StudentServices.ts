@@ -115,10 +115,11 @@ export const getListApplied = async () => {
   }
 }
 
-export const updateApplyStatus = async (applyId: number, status: string) => {
+export const updateApplyStatus = async (studentId: number,applyId: number, status: string) => {
   try {
     const response = await axiosInstance.put(`${API_URL}/update-status/${applyId}`, {
       status,
+      studentId
     });
 
     return response.data;

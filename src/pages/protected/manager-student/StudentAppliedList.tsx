@@ -69,7 +69,7 @@ const StudentAppliedList: React.FC = () => {
       setLoading(false);
     }
   };
-  const handleUpdateStatus = async (applyId: number, status: ApplyStatus) => {
+  const handleUpdateStatus = async (studentId: number,applyId: number, status: ApplyStatus) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: `Do you want to ${status.toLowerCase()} this proposal?`,
@@ -81,7 +81,7 @@ const StudentAppliedList: React.FC = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await updateApplyStatus(applyId, status);
+        const response = await updateApplyStatus(studentId, applyId, status);
         Swal.fire("Success", `Apply status updated to ${status}.`, "success");
         fetchStudents(); // Reload the data after the update
       } catch (error) {
@@ -172,7 +172,7 @@ const StudentAppliedList: React.FC = () => {
                                   type="button"
                                   className="btn btn-inverse-success btn-icon mr-2"
                                   onClick={() =>
-                                    handleUpdateStatus(student.applyId, ApplyStatus.APPROVED)
+                                    handleUpdateStatus(student.studentId ,student.applyId, ApplyStatus.APPROVED)
                                   }
                                 >
                                   Apply
@@ -181,7 +181,7 @@ const StudentAppliedList: React.FC = () => {
                                   type="button"
                                   className="btn btn-inverse-danger btn-icon"
                                   onClick={() =>
-                                    handleUpdateStatus(student.applyId, ApplyStatus.REJECT)
+                                    handleUpdateStatus(student.studentId, student.applyId, ApplyStatus.REJECT)
                                   }
                                 >
                                   Reject
