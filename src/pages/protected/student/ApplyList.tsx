@@ -42,13 +42,13 @@ const CvStudent: React.FC = () => {
                                         ID
                                     </th>
                                     <th>
-                                        internshipPosition
+                                        Internship Position
                                     </th>
                                     <th>
                                         Company
                                     </th>
                                     <th>
-                                        timeApply
+                                        Time Apply
                                     </th>
                                     <th>
                                         Status
@@ -63,7 +63,9 @@ const CvStudent: React.FC = () => {
                                                 {index + 1}
                                             </td>
                                             <td>
-                                                {apply.internshipPosition}
+                                                <Link to={`/internship/detail/${apply.internshipID}`}>
+                                                    {apply.internshipPosition}
+                                                </Link>
                                             </td>
                                             <td>
                                                 {apply.companyName}

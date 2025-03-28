@@ -99,4 +99,5 @@ export interface Apply {
   status: string;
   internshipPosition: string;
   companyName: string;
+  internshipID: number;
 }

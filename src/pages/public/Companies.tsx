@@ -80,7 +80,7 @@ const Companies: React.FC = () => {
                                     <a href="">
                                         <div className="box-company-logo">
                                             <div className="avatar">
-                                                <img src={avatarCompany} alt="Avatar Company" />
+                                                <img src={String(company.avatar || avatarCompany)} alt="Avatar Company" />
                                             </div>
                                         </div>
                                     </a>

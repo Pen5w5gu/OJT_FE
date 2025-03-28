@@ -43,6 +43,7 @@ const InternshipDetail: React.FC = () => {
             setLoading(true);
             if (id) {
                 const data = await fetchInternshipById(id);
+                console.log({ data })
                 if (data) {
                     setInternshipData(data);
                 } else {
@@ -201,7 +202,7 @@ const InternshipDetail: React.FC = () => {
                                         <div className="job-detail__company--information">
                                             <div className="job-detail__company--information-item company-name">
                                                 <Link className="company-logo" to="">
-                                                    <img src={avatarCompany} className="img-responsive" alt="company-logo" />
+                                                    <img src={String(internshipData.companyLogo || avatarCompany)} alt="company-logo" />
                                                 </Link>
                                                 <h2 className="company-name-label">
                                                     <p className="name">{internshipData.companyName}</p>
