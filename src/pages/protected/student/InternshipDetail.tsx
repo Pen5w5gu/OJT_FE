@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Internship } from "../../../types/DataTypes";
+import { Internship, Student } from "../../../types/DataTypes";
 import { fetchInternshipById } from "../../../services/InternshipServices";
-import { applyJob } from "../../../services/StudentServices";
+import { applyJob, getStudent } from "../../../services/StudentServices";
 
 interface PopupProps {
     message: string;
@@ -37,6 +37,7 @@ const InternshipDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [internshipData, setInternshipData] = useState<Internship>();
     const [isApplying, setIsApplying] = useState(false);
+    const [studentData, setStudentData] = useState<Student>();
 
     const fetchInternshipDetail = async () => {
         try {
@@ -78,6 +79,18 @@ const InternshipDetail: React.FC = () => {
             setIsApplying(false);
         }
     }
+
+    const fetchStudentData = async () => {
+        const studentData = await getStudent();
+        console.log({ studentData });
+        if (studentData) {
+            setStudentData(studentData);
+        }
+    }
+
+    useEffect(() => {
+        fetchStudentData();
+    }, []);
 
     useEffect(() => {
         fetchInternshipDetail();
@@ -140,16 +153,18 @@ const InternshipDetail: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className="job-detail__info--actions box-apply-current">
-                                            <button
-                                                onClick={apply}
-                                                disabled={isApplying}
-                                                className={`job-detail__info--actions-button button-primary ${isApplying ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                            >
-                                                <span className="button-icon">
-                                                    <i className="ti-email"></i>
-                                                </span>
-                                                {isApplying ? 'Đang xử lý...' : 'Ứng tuyển ngay'}
-                                            </button>
+                                            {studentData?.applyStatus === "Not Registered for Internship" && (
+                                                <button
+                                                    onClick={apply}
+                                                    disabled={isApplying}
+                                                    className={`job-detail__info--actions-button button-primary ${isApplying ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                >
+                                                    <span className="button-icon">
+                                                        <i className="ti-email"></i>
+                                                    </span>
+                                                    {isApplying ? 'Đang xử lý...' : 'Ứng tuyển ngay'}
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
 
