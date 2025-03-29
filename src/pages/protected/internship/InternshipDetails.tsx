@@ -11,6 +11,7 @@ import {
   fetchInternshipById,
 } from "../../../services/InternshipServices";
 import { Internship } from "../../../types/DataTypes";
+import axios from "axios";
 
 const InternshipDetails: React.FC = () => {
   const { mode, internshipId } = useParams();
@@ -21,7 +22,8 @@ const InternshipDetails: React.FC = () => {
   const [majors, setMajors] = useState<any[]>([]); // Dữ liệu chuyên ngành
   const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
   const [selectedMajor, setSelectedMajor] = useState<any | null>(null);
-
+  const [positions, setPositions] = useState<any[]>([]);
+  const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
   const isUpdateMode = mode === "update";
   const isCreateMode = mode === "create";
   const isDetailsMode = mode === "details";
@@ -34,6 +36,12 @@ const InternshipDetails: React.FC = () => {
     }
   }, [internshipId, isDetailsMode, isUpdateMode]);
 
+  useEffect(() => {
+    if (selectedMajor !== null) {
+      fetchPositions(selectedMajor);
+    }
+  }, [selectedMajor]);
+
   // Hàm lấy chi tiết internship
   const fetchInternshipDetails = async (internshipId: string) => {
     try {
@@ -42,6 +50,7 @@ const InternshipDetails: React.FC = () => {
         setInternship(data);
         setSelectedCompany(data.companyID);
         setSelectedMajor(data.majorName);
+         setSelectedPosition(data.position);
       }
     } catch (error) {
       Swal.fire(
@@ -81,13 +90,13 @@ const InternshipDetails: React.FC = () => {
     e.preventDefault();
 
     const internshipData = {
-      position: (e.target as any).position.value,
+      position: selectedPosition,
       description: (e.target as any).description.value,
       requirement: (e.target as any).requirement.value,
       benefits: (e.target as any).benefits.value,
       salary: Number((e.target as any).salary.value),
       companyId: selectedCompany,
-      majorId: selectedMajor,
+      majorId: Number(selectedMajor),
     };
 
     try {
@@ -118,7 +127,27 @@ const InternshipDetails: React.FC = () => {
     navigate(`/manager/internship/update/${internshipId}`);
     window.location.reload();
   };
-
+  const fetchPositions = async (majorId: number) => {
+    try {
+      // Giả sử file positions.json được đặt trong public/data/
+      const response = await axios.get("/data/positions.json");
+      const allPositions = response.data;
+      // Lọc các position có majorId trùng với major đã chọn
+      const filtered = allPositions.filter(
+        (pos: any) => Number(pos.majorId) === Number(majorId)
+      );
+      // Chuyển thành dạng { value, label } cho react-select, giá trị là tên của position
+      setPositions(
+        filtered.map((pos: any) => ({
+          value: pos.positionName,
+          label: pos.positionName,
+        }))
+      );
+    } catch (error) {
+      console.error("Error loading positions:", error);
+      Swal.fire("Error", "Unable to load positions.", "error");
+    }
+  };
   return (
     <div id="InternshipDetail" className="row">
       <div className="col-12 grid-margin stretch-card">
@@ -133,13 +162,30 @@ const InternshipDetails: React.FC = () => {
             </h4>
             <form className="forms-sample" onSubmit={handleSubmit}>
               <div className="form-group">
+                <label>Major</label>
+                <Select
+                  placeholder="Select Major"
+                  options={majors}
+                  value={majors.find((major) => major.label === selectedMajor)}
+                  onChange={(selectedOption) => {
+                    setSelectedMajor(selectedOption?.value || null);
+                    setSelectedPosition(null); // reset position
+                  }}
+                  isDisabled={isDetailsMode}
+                />
+              </div>
+              <div className="form-group">
                 <label>Position</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="position"
-                  defaultValue={internship?.position || ""}
-                  disabled={isDetailsMode}
+                <Select
+                  placeholder="Select Position"
+                  options={positions}
+                  value={positions.find(
+                    (pos: any) => pos.value === selectedPosition
+                  )}
+                  onChange={(selectedOption) =>
+                    setSelectedPosition(selectedOption?.value || null)
+                  }
+                  isDisabled={isDetailsMode}
                 />
               </div>
 
@@ -163,18 +209,6 @@ const InternshipDetails: React.FC = () => {
                   )}
                   onChange={(selectedOption) =>
                     setSelectedCompany(selectedOption?.value || null)
-                  }
-                  isDisabled={isDetailsMode}
-                />
-              </div>
-              <div className="form-group">
-                <label>Major</label>
-                <Select
-                  placeholder="Select Major"
-                  options={majors}
-                  value={majors.find((major) => major.label === selectedMajor)}
-                  onChange={(selectedOption) =>
-                    setSelectedMajor(selectedOption?.value || null)
                   }
                   isDisabled={isDetailsMode}
                 />

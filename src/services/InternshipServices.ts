@@ -96,7 +96,7 @@ export const updateInternship = async (id: number, internshipData: any) => {
 
 export const createInternship = async (internshipData: any) => {
   try {
-    const response = await axios.post( `${API_URL}/CreateInternship`, internshipData);
+    const response = await axiosInstance.post( `${API_URL}/CreateInternship`, internshipData);
     return response.data;
   } catch (error) {
     console.error("Error creating internship:", error);

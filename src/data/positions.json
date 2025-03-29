@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "majorName": "IT",
+    "positionName": "Frontend Developer"
+  },
+  {
+    "id": 2,
+    "majorName": "IT",
+    "positionName": "Backend Developer"
+  },
+  {
+    "id": 3,
+    "majorName": "IT",
+    "positionName": "Full Stack Developer"
+  },
+  {
+    "id": 4,
+    "majorName": "Business",
+    "positionName": "Business Analyst"
+  },
+  {
+    "id": 5,
+    "majorName": "Business",
+    "positionName": "Business Consultant"
+  },
+  {
+    "id": 6,
+    "majorName": "Business",
+    "positionName": "Project Manager"
+  },
+  {
+    "id": 7,
+    "majorName": "Marketing",
+    "positionName": "Digital Marketer"
+  },
+  {
+    "id": 8,
+    "majorName": "Marketing",
+    "positionName": "SEO Specialist"
+  },
+  {
+    "id": 9,
+    "majorName": "Marketing",
+    "positionName": "Content Strategist"
+  },
+  {
+    "id": 10,
+    "majorName": "Design",
+    "positionName": "Graphic Designer"
+  },
+  {
+    "id": 11,
+    "majorName": "Design",
+    "positionName": "UI/UX Designer"
+  },
+  {
+    "id": 12,
+    "majorName": "Design",
+    "positionName": "Product Designer"
+  },
+  {
+    "id": 13,
+    "majorName": "Finance",
+    "positionName": "Financial Analyst"
+  },
+  {
+    "id": 14,
+    "majorName": "Finance",
+    "positionName": "Accountant"
+  },
+  {
+    "id": 15,
+    "majorName": "Finance",
+    "positionName": "Investment Banker"
+  }
+]

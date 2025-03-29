@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "majorId": 1,
+    "positionName": "Frontend Developer"
+  },
+  {
+    "id": 2,
+    "majorId": 1,
+    "positionName": "Backend Developer"
+  },
+  {
+    "id": 3,
+    "majorId": 1,
+    "positionName": "Fullstack Developer"
+  },
+  {
+    "id": 4,
+    "majorId": 2,
+    "positionName": "Business Analyst"
+  },
+  {
+    "id": 5,
+    "majorId": 2,
+    "positionName": "Project Manager"
+  },
+  {
+    "id": 6,
+    "majorId": 2,
+    "positionName": "Operations Manager"
+  },
+  {
+    "id": 7,
+    "majorId": 3,
+    "positionName": "Digital Marketer"
+  },
+  {
+    "id": 8,
+    "majorId": 3,
+    "positionName": "SEO Specialist"
+  },
+  {
+    "id": 9,
+    "majorId": 3,
+    "positionName": "Content Strategist"
+  },
+  {
+    "id": 10,
+    "majorId": 4,
+    "positionName": "Graphic Designer"
+  },
+  {
+    "id": 11,
+    "majorId": 4,
+    "positionName": "UI/UX Designer"
+  },
+  {
+    "id": 12,
+    "majorId": 4,
+    "positionName": "Product Designer"
+  },
+  {
+    "id": 13,
+    "majorId": 5,
+    "positionName": "Financial Analyst"
+  },
+  {
+    "id": 14,
+    "majorId": 5,
+    "positionName": "Accountant"
+  },
+  {
+    "id": 15,
+    "majorId": 5,
+    "positionName": "Investment Banker"
+  }
+]

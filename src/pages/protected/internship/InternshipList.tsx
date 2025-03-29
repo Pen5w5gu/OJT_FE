@@ -190,8 +190,9 @@ const InternshipList: React.FC = () => {
                             <td>{internship.position}</td>
 
                             <td>{internship.companyName}</td>
-                            <td>${internship.salary}</td>
                             <td>{internship.majorName}</td>
+                            <td>${internship.salary}</td>
+                            
                             <td>
                               <Link
                                 to={`/manager/internship/update/${internship.internshipId}`}
